@@ -5,7 +5,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShopContext from './../context/shopContext';
 
 export default function Navbar() {
-  const { toggleCart } = useContext(ShopContext);
+  const { state, toggleCart } = useContext(ShopContext);
+  const { isCartOpen } = state;
   return (
     <AppBar>
       <Toolbar>
@@ -13,7 +14,10 @@ export default function Navbar() {
           <Link to='/'>WINESHOP</Link>
         </div>
         <div>
-          <IconButton aria-label='cart' onClick={() => toggleCart(true)}>
+          <IconButton
+            aria-label={!isCartOpen && 'Open Cart'}
+            onClick={() => toggleCart(true)}
+          >
             <ShoppingCartIcon />
           </IconButton>
         </div>

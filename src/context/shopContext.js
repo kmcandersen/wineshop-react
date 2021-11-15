@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
+import Client from 'shopify-buy';
 
 const ShopContext = React.createContext();
+
+const client = Client.buildClient({
+  domain: process.env.REACT_APP_SHOPIFY_DOMAIN,
+  storefrontAccessToken: process.env.REACT_APP_SHOPIFY_API,
+});
 
 const initialState = {
   product: {},
@@ -12,12 +18,18 @@ const initialState = {
 export const ShopProvider = ({ children }) => {
   const [state, setState] = useState(initialState);
 
+  const fetchAllProducts = async () => {
+    const products = await client.product.fetchAll();
+    console.log('products', products);
+    setState({ products: products });
+  };
+
   const toggleCart = (bool) => {
     setState({ isCartOpen: bool });
   };
 
   return (
-    <ShopContext.Provider value={{ state, toggleCart }}>
+    <ShopContext.Provider value={{ state, fetchAllProducts, toggleCart }}>
       {children}
     </ShopContext.Provider>
   );
