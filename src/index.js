@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ShopProvider } from './context/shopContext';
+import { ThemeProvider } from '@mui/material/styles';
+import customTheme from './styles/theme.js';
 import App from './App';
 import './index.css';
 
@@ -9,7 +11,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ShopProvider>
-        <App />
+        <ThemeProvider theme={customTheme}>
+          <App />
+        </ThemeProvider>
       </ShopProvider>
     </BrowserRouter>
   </React.StrictMode>,

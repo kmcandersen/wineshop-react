@@ -1,5 +1,6 @@
 import React from 'react';
+import { PageHead } from './../components/AppText';
 
 export default function Home() {
-  return <div>HOME</div>;
+  return <PageHead color='darkGold'>Home</PageHead>;
 }
