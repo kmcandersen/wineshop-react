@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: '#525252', // darkGray
+      main: '#525252', // darkGrayText
     },
     secondary: {
       main: '#B71010', // maroon
@@ -14,10 +14,10 @@ const customTheme = createTheme({
     darkGold: { main: '#B98604' }, // passes AA normal text
     pink: { main: '#EA9999' },
     darkPink: { main: '#C47E7E' }, // passes AA large text
-    darkGray: { main: '#525252' },
-    mediumGray: { main: '#6B6B6B' }, // passes AA large text
-    lightGray: { main: '#F4F4F4' },
-    black: { main: '#000' },
+    darkGrayText: { main: '#525252' },
+    mediumGrayText: { main: '#6B6B6B' }, // passes AA large text
+    lightGray: { main: '#DBDBDB' },
+    black: { main: '#1E1E1E' },
     white: { main: '#fff' },
   },
   typography: {

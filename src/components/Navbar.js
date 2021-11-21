@@ -37,14 +37,14 @@ export default function Navbar() {
         <div>
           <Link style={{ textDecoration: 'none' }} to='products'>
             <Button variant='text'>
-              <Typography variant='button'>BROWSE</Typography>
+              <Typography variant='button'>PRODUCTS</Typography>
             </Button>
           </Link>
           <Button
             variant='text'
             startIcon={
               <ShoppingCartIcon
-                sx={{ color: customTheme.palette.mediumGray.main }}
+                sx={{ color: customTheme.palette.mediumGrayText.main }}
               />
             }
             aria-label={!isCartOpen && 'Open Cart'}
@@ -58,71 +58,3 @@ export default function Navbar() {
     </AppBar>
   );
 }
-
-// const styles = {
-//     container: {
-//       display: 'flex',
-//       alignItems: 'center',
-//       flex: 1,
-//     },
-//     navlink: {
-//       color: 'white',
-//       fontWeight: 'bold',
-//     },
-//     logoGroup: {
-//       fontFamily: `'Righteous', sans-serif`,
-//       fontSize: '1.8rem',
-//       letterSpacing: '1.5px',
-//       color: 'white',
-//       display: 'flex',
-//       width: '90%',
-//     },
-//     logoIcon: {
-//       height: '28px',
-//       width: '28px',
-//       color: 'white',
-//       margin: `4px 3px 0 0`,
-//     },
-//   };
-
-//   const Navbar = () => {
-//     return (
-//       <AppBar position='fixed' style={{ height: '9vh' }}>
-//         <Toolbar>
-//           <div style={{ ...styles.container }}>
-//             <div
-//               style={{
-//                 ...styles.logoGroup,
-//               }}
-//             >
-//               <Link
-//                 to='/'
-//                 style={{
-//                   ...styles.logoGroup,
-//                 }}
-//               >
-//                 <CameraIcon style={{ ...styles.logoIcon }} />
-//                 PETPIX
-//               </Link>
-//             </div>
-//             <div>
-//               <NavLink
-//                 to='cats'
-//                 className={({ isActive }) => (isActive ? 'nav-active' : '')}
-//                 style={{ ...styles.navlink }}
-//               >
-//                 CATS
-//               </NavLink>
-//               <NavLink
-//                 to='dogs'
-//                 className={({ isActive }) => (isActive ? 'nav-active' : '')}
-//                 style={{ ...styles.navlink, marginLeft: '30px' }}
-//               >
-//                 DOGS
-//               </NavLink>
-//             </div>
-//           </div>
-//         </Toolbar>
-//       </AppBar>
-//     );
-//   };

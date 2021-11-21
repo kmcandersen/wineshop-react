@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Client from 'shopify-buy';
 
 const ShopContext = React.createContext();
@@ -17,6 +17,10 @@ const initialState = {
 
 export const ShopProvider = ({ children }) => {
   const [state, setState] = useState(initialState);
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
 
   const fetchAllProducts = async () => {
     const products = await client.product.fetchAll();
