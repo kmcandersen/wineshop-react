@@ -9,9 +9,14 @@ export function TextButton({ children, color = 'primary' }) {
   );
 }
 
-export function OutlinedButton({ children }) {
+export function OutlinedButton({ children, onClick }) {
   return (
-    <Button variant='outlined' color='secondary'>
+    <Button
+      variant='outlined'
+      color='secondary'
+      sx={{ width: '250px', mt: '10px', height: '50px', borderWidth: '2px' }}
+      onClick={onClick}
+    >
       {children}
     </Button>
   );

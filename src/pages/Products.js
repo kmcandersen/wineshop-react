@@ -4,7 +4,7 @@ import ShopContext from './../context/shopContext';
 import {
   PageHead,
   ProductListName,
-  ProductDescDetails,
+  ProductListDetails,
   Subhead1,
 } from './../components/AppText';
 import customTheme from './../styles/theme.js';
@@ -43,17 +43,18 @@ const styles = {
 
 export default function Products() {
   const { state } = useContext(ShopContext);
+  const { products } = state;
 
-  if (!state.products) {
+  if (!products) {
     return <div>Loading...</div>;
   } else {
     return (
       <Container>
         <PageHead>all products</PageHead>
-        <Subhead1>{state.products.length} items</Subhead1>
+        <Subhead1>{products.length} items</Subhead1>
         <div style={{ ...styles.listContainer }}>
-          {state.products.length ? (
-            state.products.map((p) => (
+          {products.length ? (
+            products.map((p) => (
               <div
                 key={p.id}
                 style={{
@@ -69,7 +70,7 @@ export default function Products() {
                 <div style={{ ...styles.textContainer }}>
                   <ProductListName handle={p.handle}>{p.title}</ProductListName>
                   <div style={{ ...styles.detailsRow }}>
-                    <ProductDescDetails>{p.productType}</ProductDescDetails>
+                    <ProductListDetails>{p.productType}</ProductListDetails>
                     <Typography paragraph style={{ ...styles.price }}>
                       ${p.variants[0].price}
                     </Typography>
