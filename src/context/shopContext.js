@@ -54,7 +54,11 @@ export const ShopProvider = ({ children }) => {
   const [state, dispatch] = useReducer(shopReducer, initialState);
 
   useEffect(() => {
-    createCheckout();
+    if (localStorage.checkout_id) {
+      fetchCheckout(localStorage.checkout_id);
+    } else {
+      createCheckout();
+    }
 
     const fetchAllProducts = async () => {
       const products = await client.product.fetchAll();
@@ -86,7 +90,7 @@ export const ShopProvider = ({ children }) => {
 
   const createCheckout = async () => {
     const checkout = await client.checkout.create();
-    localStorage.setItem('checkout-id', checkout.id);
+    localStorage.setItem('checkout_id', checkout.id);
     dispatch({
       type: 'UPDATE_CHECKOUT',
       payload: checkout,
