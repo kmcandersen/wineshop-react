@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import customTheme from './../styles/theme.js';
+import ShopContext from '../context/shopContext';
 
 export function PageHead({ children, color = 'mediumGrayText' }) {
   return (
@@ -50,14 +51,20 @@ export function Subhead1({ children }) {
   );
 }
 
-export function Subhead2({ children }) {
+// Cart: "Your Cart" & "Subtotal"
+export function Subhead2({ children, color = 'black', size = 'med' }) {
+  const fontColor =
+    color === 'gray'
+      ? customTheme.palette.mediumGrayText.main
+      : customTheme.palette.black.main;
+  const fontSize = size === 'lg' ? '1.2rem' : '1rem';
   return (
     <Typography
-      component='h3'
       sx={{
-        fontSize: '1.25rem',
-        color: customTheme.palette.mediumGrayText.main,
+        fontSize: fontSize,
+        color: fontColor,
         textTransform: 'uppercase',
+        letterSpacing: '0.4px',
       }}
     >
       {children}
@@ -143,7 +150,7 @@ export function ProductDescDetails({ children }) {
   );
 }
 
-export function ProductDescBody({ children }) {
+export function BodyTextSpecial({ children }) {
   return (
     <Typography
       paragraph
@@ -155,5 +162,27 @@ export function ProductDescBody({ children }) {
     >
       {children}
     </Typography>
+  );
+}
+
+export function CartListName({ children, handle }) {
+  const { toggleCart } = useContext(ShopContext);
+  return (
+    <Link
+      to={`/products/${handle}`}
+      onClick={() => toggleCart(false)}
+      style={{ textDecoration: 'none' }}
+    >
+      <Typography
+        component='h4'
+        sx={{
+          color: customTheme.palette.black.main,
+          fontSize: '1.1rem',
+          fontWeight: 700,
+        }}
+      >
+        {children}
+      </Typography>
+    </Link>
   );
 }

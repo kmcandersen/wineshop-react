@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import Cart from './Cart';
+import Cart from '../pages/Cart';
 import Navbar from './Navbar';
 
 const styles = {

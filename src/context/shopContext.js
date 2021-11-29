@@ -23,15 +23,21 @@ const shopReducer = (state, action) => {
     case 'FETCH_ONE_PRODUCT': {
       return { ...state, product: action.payload };
     }
-    case 'CREATE_CHECKOUT': {
+    case 'UPDATE_CHECKOUT': {
       return { ...state, checkout: action.payload };
     }
-    case 'FETCH_CHECKOUT': {
-      return { ...state, checkout: action.payload };
-    }
-    case 'ADD_CHECKOUT_ITEM': {
-      return { ...state, checkout: action.payload };
-    }
+    // case 'CREATE_CHECKOUT': {
+    //   return { ...state, checkout: action.payload };
+    // }
+    // case 'FETCH_CHECKOUT': {
+    //   return { ...state, checkout: action.payload };
+    // }
+    // case 'ADD_CHECKOUT_ITEM': {
+    //   return { ...state, checkout: action.payload };
+    // }
+    // case 'REMOVE_CHECKOUT_ITEM': {
+    //   return { ...state, checkout: action.payload };
+    // }
     case 'TOGGLE_CART': {
       return { ...state, isCartOpen: action.payload };
     }
@@ -68,36 +74,57 @@ export const ShopProvider = ({ children }) => {
     const checkout = await client.checkout.create();
     localStorage.setItem('checkout-id', checkout.id);
     dispatch({
-      type: 'CREATE_CHECKOUT',
+      type: 'UPDATE_CHECKOUT',
       payload: checkout,
     });
   };
 
-  const fetchCheckout = (checkoutId) => {
-    client.checkout
-      .fetch(checkoutId)
-      .then((checkout) => {
-        dispatch({
-          type: 'FETCH_CHECKOUT',
-          payload: checkout,
-        });
-      })
-      .catch((error) => console.log(error));
+  const fetchCheckout = async (checkoutId) => {
+    const checkout = await client.checkout.fetch(checkoutId);
+    dispatch({
+      type: 'UPDATE_CHECKOUT',
+      payload: checkout,
+    });
   };
 
   const addItemToCheckout = async (variantId, quantity) => {
-    const lineItemsToAdd = [
+    const lineItemToAdd = [
       { variantId: variantId, quantity: parseInt(quantity, 10) },
     ];
     const checkout = await client.checkout.addLineItems(
       state.checkout.id,
-      lineItemsToAdd
+      lineItemToAdd
     );
     dispatch({
-      type: 'ADD_CHECKOUT_ITEM',
+      type: 'UPDATE_CHECKOUT',
       payload: checkout,
     });
     toggleCart(true);
+  };
+
+  const updateCheckoutItem = async (variantId, quantity) => {
+    const lineItemsToUpdate = [
+      { id: variantId, quantity: parseInt(quantity, 10) },
+    ];
+    const checkout = await client.checkout.updateLineItems(
+      state.checkout.id,
+      lineItemsToUpdate
+    );
+    dispatch({
+      type: 'UPDATE_CHECKOUT',
+      payload: checkout,
+    });
+  };
+
+  const removeLineItem = async (lineItemIdToRemove) => {
+    const checkout = await client.checkout.removeLineItems(
+      state.checkout.id,
+      lineItemIdToRemove
+    );
+    dispatch({
+      type: 'UPDATE_CHECKOUT',
+      payload: checkout,
+    });
   };
 
   const toggleCart = (bool) => {
@@ -114,6 +141,8 @@ export const ShopProvider = ({ children }) => {
         fetchProductWithHandle,
         fetchCheckout,
         addItemToCheckout,
+        updateCheckoutItem,
+        removeLineItem,
         toggleCart,
       }}
     >
