@@ -4,15 +4,16 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Product from './pages/Product';
-import Products from './pages/Products';
+import ProductList from './pages/ProductList';
 
 export default function App() {
   return (
     <Layout>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='products' element={<Products />} />
+        <Route path='products' element={<ProductList />} />
         <Route path='products/:handle' element={<Product />} />
+        <Route path='collections/:handle' element={<ProductList />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Layout>

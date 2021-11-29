@@ -13,6 +13,7 @@ export function PageHead({ children, color = 'mediumGrayText' }) {
         fontFamily: 'Playfair Display',
         fontSize: '2.2rem',
         fontWeight: 700,
+        textTransform: 'lowercase',
       }}
     >
       {children}

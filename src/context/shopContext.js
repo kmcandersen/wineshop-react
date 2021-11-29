@@ -11,6 +11,7 @@ const client = Client.buildClient({
 const initialState = {
   product: {},
   products: [],
+  collections: [],
   checkout: {},
   isCartOpen: false,
 };
@@ -38,6 +39,9 @@ const shopReducer = (state, action) => {
     // case 'REMOVE_CHECKOUT_ITEM': {
     //   return { ...state, checkout: action.payload };
     // }
+    case 'FETCH_ALL_COLLECTIONS': {
+      return { ...state, collections: action.payload };
+    }
     case 'TOGGLE_CART': {
       return { ...state, isCartOpen: action.payload };
     }
@@ -60,6 +64,16 @@ export const ShopProvider = ({ children }) => {
       });
     };
     fetchAllProducts();
+
+    const fetchCollections = async () => {
+      const collections = await client.collection.fetchAllWithProducts();
+      dispatch({
+        type: 'FETCH_ALL_COLLECTIONS',
+        payload: collections,
+      });
+    };
+    // collections[n].handle, collections[n].title, collections[0].products
+    fetchCollections();
   }, []);
 
   const fetchProductWithHandle = async (handle) => {

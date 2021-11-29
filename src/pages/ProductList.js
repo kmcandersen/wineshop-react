@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
-import ShopContext from './../context/shopContext';
+import ShopContext from '../context/shopContext';
 import {
   PageHead,
   ProductListName,
   ProductListDetails,
   Subhead1,
-} from './../components/AppText';
-import customTheme from './../styles/theme.js';
+} from '../components/AppText';
+import customTheme from '../styles/theme.js';
 
 const styles = {
   detailsRow: {
@@ -41,16 +42,56 @@ const styles = {
   },
 };
 
-export default function Products() {
+export default function ProductList() {
   const { state } = useContext(ShopContext);
-  const { products } = state;
+  const { collections, products } = state;
 
-  if (!products) {
+  const location = useLocation();
+  const collectionHandle = useParams();
+
+  const getHeaderColor = (handle) => {
+    if (handle === 'reds') {
+      return 'maroon';
+    }
+    if (handle === 'whites') {
+      return 'darkGold';
+    }
+    if (handle === 'roses') {
+      return 'darkPink';
+    }
+  };
+
+  const getItemsToShow = () => {
+    const subdirectory = location.pathname.split('/')[1];
+    if (subdirectory === 'products') {
+      return {
+        title: `All products`,
+        products: products,
+        headerColor: 'mediumGrayText',
+      };
+    }
+    if (subdirectory === 'collections' && collections.length) {
+      const targetCollection = collections.find(
+        (c) => c.handle === collectionHandle.handle
+      );
+      const headerColor = getHeaderColor(collectionHandle.handle);
+      return {
+        title: `All ${targetCollection.title}`,
+        products: targetCollection.products,
+        headerColor: headerColor,
+      };
+    }
+  };
+
+  const itemsToShow = collections && getItemsToShow();
+
+  if (!itemsToShow) {
     return <div>Loading...</div>;
   } else {
+    const { title, products, headerColor } = itemsToShow;
     return (
       <Container>
-        <PageHead>all products</PageHead>
+        <PageHead color={headerColor}>{title}</PageHead>
         <Subhead1>{products.length} items</Subhead1>
         <div style={{ ...styles.listContainer }}>
           {products.length ? (
