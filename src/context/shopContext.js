@@ -1,18 +1,11 @@
 import React, { useEffect, useReducer } from 'react';
-// import Client from 'shopify-buy';
-import Client from 'shopify-buy/index.unoptimized.umd';
+import client from '../config/initClient.js';
 
 const ShopContext = React.createContext();
-
-const client = Client.buildClient({
-  domain: process.env.REACT_APP_SHOPIFY_DOMAIN,
-  storefrontAccessToken: process.env.REACT_APP_SHOPIFY_API,
-});
 
 const initialState = {
   products: [],
   product: {},
-  collection: {},
   checkout: {},
   isCartOpen: false,
 };
@@ -27,9 +20,6 @@ const shopReducer = (state, action) => {
     }
     case 'UPDATE_CHECKOUT': {
       return { ...state, checkout: action.payload };
-    }
-    case 'FETCH_ONE_COLLECTION': {
-      return { ...state, collection: action.payload };
     }
     case 'TOGGLE_CART': {
       return { ...state, isCartOpen: action.payload };
@@ -190,14 +180,6 @@ export const ShopProvider = ({ children }) => {
     });
   };
 
-  const fetchCollection = async (collectionId) => {
-    const collection = await client.collection.fetchWithProducts(collectionId);
-    dispatch({
-      type: 'FETCH_ONE_COLLECTION',
-      payload: collection,
-    });
-  };
-
   const toggleCart = (bool) => {
     dispatch({
       type: 'TOGGLE_CART',
@@ -214,7 +196,6 @@ export const ShopProvider = ({ children }) => {
         addItemToCheckout,
         updateCheckoutItem,
         removeLineItem,
-        fetchCollection,
         toggleCart,
       }}
     >

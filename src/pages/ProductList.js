@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
+import client from '../config/initClient.js';
 import ShopContext from '../context/shopContext';
 import {
   PageHead,
@@ -44,9 +45,36 @@ const styles = {
 
 export default function ProductList() {
   const { state } = useContext(ShopContext);
-  const { collection, products } = state;
+  const { products } = state;
+  const [itemsToShow, setItemsToShow] = useState();
 
   const location = useLocation();
+  const collId = location.state ? location.state.collId : null;
+
+  useEffect(() => {
+    // if '/collections'
+    if (collId) {
+      const fetchCollection = async (collectionId) => {
+        const collection = await client.collection.fetchWithProducts(
+          collectionId
+        );
+        const headerColor = getHeaderColor(collection.handle);
+        setItemsToShow({
+          title: `All ${collection.title}`,
+          products: collection.products,
+          headerColor: headerColor,
+        });
+      };
+      fetchCollection(collId);
+    } else {
+      // if '/products'
+      setItemsToShow({
+        title: `All products`,
+        products: products,
+        headerColor: 'mediumGrayText',
+      });
+    }
+  }, [collId, location, products]);
 
   const getHeaderColor = (handle) => {
     if (handle === 'reds') {
@@ -59,27 +87,6 @@ export default function ProductList() {
       return 'darkPink';
     }
   };
-
-  const getItemsToShow = () => {
-    const subdirectory = location.pathname.split('/')[1];
-    if (subdirectory === 'products') {
-      return {
-        title: `All products`,
-        products: products,
-        headerColor: 'mediumGrayText',
-      };
-    }
-    if (subdirectory === 'collections' && collection.products) {
-      const headerColor = getHeaderColor(collection.handle);
-      return {
-        title: `All ${collection.title}`,
-        products: collection.products,
-        headerColor: headerColor,
-      };
-    }
-  };
-
-  const itemsToShow = collection && getItemsToShow();
 
   if (!itemsToShow) {
     return <div>Loading...</div>;

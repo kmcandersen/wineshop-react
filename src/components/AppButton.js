@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ShopContext from '../context/shopContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
@@ -23,14 +24,33 @@ export function OutlinedButton({ children, onClick }) {
   );
 }
 
-export function OutlinedLinkButton({
+export function OutlinedEmptyCartButton() {
+  const { toggleCart } = useContext(ShopContext);
+  return (
+    <Link
+      to={`/products`}
+      onClick={() => toggleCart(false)}
+      style={{ textDecoration: 'none' }}
+    >
+      <Button
+        variant='outlined'
+        color='secondary'
+        sx={{ width: '250px', mt: '10px', height: '50px', borderWidth: '2px' }}
+      >
+        Start Shopping
+      </Button>
+    </Link>
+  );
+}
+
+export function OutlinedHeroLinkButton({
   children,
   color = 'secondary',
   route,
-  clickHandler,
+  collId,
 }) {
   return (
-    <Link to={route} onClick={clickHandler} style={{ textDecoration: 'none' }}>
+    <Link to={route} state={{ collId }} style={{ textDecoration: 'none' }}>
       <Button
         variant='outlined'
         color={color}

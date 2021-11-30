@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
-import ShopContext from '../context/shopContext';
-import { OutlinedLinkButton } from '../components/AppButton';
+import client from '../config/initClient.js';
+import { OutlinedHeroLinkButton } from '../components/AppButton';
 
 const redsId = 'Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIxMjgzOTEwNDY3NQ==';
 const whitesId = 'Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIxMjgzOTIwMjk3OQ==';
@@ -10,32 +10,37 @@ const rosesId = 'Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIxMjgzOTE3MDIxMQ==';
 const featuredId = 'Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIxMzE5MTUyNDUxNQ==';
 
 export default function Home() {
-  const { fetchCollection } = useContext(ShopContext);
+  const [collection, setCollection] = useState({});
 
-  useEffect(() => fetchCollection(featuredId), [fetchCollection]);
+  useEffect(() => {
+    const fetchCollection = async (collectionId) => {
+      const collection = await client.collection.fetchWithProducts(
+        collectionId
+      );
+      setCollection(collection);
+    };
+    fetchCollection(featuredId);
+  }, []);
 
   return (
     <Container>
-      <OutlinedLinkButton
-        route='/collections/reds'
-        clickHandler={() => fetchCollection(redsId)}
-      >
+      <OutlinedHeroLinkButton route='/collections/reds' collId={redsId}>
         Shop all reds
-      </OutlinedLinkButton>
-      <OutlinedLinkButton
+      </OutlinedHeroLinkButton>
+      <OutlinedHeroLinkButton
         color='darkGold'
         route='/collections/whites'
-        clickHandler={() => fetchCollection(whitesId)}
+        collId={whitesId}
       >
         Shop all whites
-      </OutlinedLinkButton>
-      <OutlinedLinkButton
+      </OutlinedHeroLinkButton>
+      <OutlinedHeroLinkButton
         color='darkPink'
         route='/collections/roses'
-        clickHandler={() => fetchCollection(rosesId)}
+        collId={rosesId}
       >
         Shop all rosés
-      </OutlinedLinkButton>
+      </OutlinedHeroLinkButton>
     </Container>
   );
 }
