@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
 import ShopContext from '../context/shopContext';
 import {
@@ -44,10 +44,9 @@ const styles = {
 
 export default function ProductList() {
   const { state } = useContext(ShopContext);
-  const { collections, products } = state;
+  const { collection, products } = state;
 
   const location = useLocation();
-  const collectionHandle = useParams();
 
   const getHeaderColor = (handle) => {
     if (handle === 'reds') {
@@ -70,32 +69,29 @@ export default function ProductList() {
         headerColor: 'mediumGrayText',
       };
     }
-    if (subdirectory === 'collections' && collections.length) {
-      const targetCollection = collections.find(
-        (c) => c.handle === collectionHandle.handle
-      );
-      const headerColor = getHeaderColor(collectionHandle.handle);
+    if (subdirectory === 'collections' && collection.products) {
+      const headerColor = getHeaderColor(collection.handle);
       return {
-        title: `All ${targetCollection.title}`,
-        products: targetCollection.products,
+        title: `All ${collection.title}`,
+        products: collection.products,
         headerColor: headerColor,
       };
     }
   };
 
-  const itemsToShow = collections && getItemsToShow();
+  const itemsToShow = collection && getItemsToShow();
 
   if (!itemsToShow) {
     return <div>Loading...</div>;
   } else {
-    const { title, products, headerColor } = itemsToShow;
+    const { title, headerColor } = itemsToShow;
     return (
       <Container>
         <PageHead color={headerColor}>{title}</PageHead>
-        <Subhead1>{products.length} items</Subhead1>
+        <Subhead1>{itemsToShow.products.length} items</Subhead1>
         <div style={{ ...styles.listContainer }}>
-          {products.length ? (
-            products.map((p) => (
+          {itemsToShow.products.length ? (
+            itemsToShow.products.map((p) => (
               <div
                 key={p.id}
                 style={{

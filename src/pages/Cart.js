@@ -79,7 +79,9 @@ export default function Cart() {
                   <BodyTextSpecial>
                     Tax and shipping will be calculated during checkout
                   </BodyTextSpecial>
-                  <OutlinedButton>Checkout</OutlinedButton>
+                  <OutlinedButton onClick={() => toggleCart(false)}>
+                    Checkout
+                  </OutlinedButton>
                 </Box>
               </Box>
             ) : (

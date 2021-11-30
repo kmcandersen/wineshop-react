@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import ShopContext from '../context/shopContext';
 
 export function TextButton({ children, color = 'primary' }) {
   return (
@@ -24,14 +23,14 @@ export function OutlinedButton({ children, onClick }) {
   );
 }
 
-export function OutlinedLinkButton({ children, color = 'secondary', route }) {
-  const { toggleCart } = useContext(ShopContext);
+export function OutlinedLinkButton({
+  children,
+  color = 'secondary',
+  route,
+  clickHandler,
+}) {
   return (
-    <Link
-      to={route}
-      onClick={() => toggleCart(false)}
-      style={{ textDecoration: 'none' }}
-    >
+    <Link to={route} onClick={clickHandler} style={{ textDecoration: 'none' }}>
       <Button
         variant='outlined'
         color={color}
