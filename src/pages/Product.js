@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -38,13 +37,9 @@ const styles = {
 };
 
 export default function Product() {
-  const [quantity, setQuantity] = useState('1');
-  const { handle } = useParams();
-
   const { addItemToCheckout, state } = useContext(ShopContext);
-
-  const { products } = state;
-  const product = products.find((p) => p.handle === handle);
+  const { product } = state;
+  const [quantity, setQuantity] = useState('1');
 
   const handleChange = (e) => {
     setQuantity(e.target.value);

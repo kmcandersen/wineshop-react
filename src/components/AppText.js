@@ -85,9 +85,14 @@ export function ProductCardName({ children }) {
   );
 }
 
-export function ProductListName({ children, handle }) {
+export function ProductListName({ children, handle, title }) {
+  const { fetchProductWithTitle } = useContext(ShopContext);
   return (
-    <Link to={`/products/${handle}`} style={{ textDecoration: 'none' }}>
+    <Link
+      to={`/products/${handle}`}
+      onClick={() => fetchProductWithTitle(title)}
+      style={{ textDecoration: 'none' }}
+    >
       <Typography
         component='h4'
         sx={{

@@ -105,7 +105,9 @@ export default function ProductList() {
                   style={{ ...styles.image }}
                 />
                 <div style={{ ...styles.textContainer }}>
-                  <ProductListName handle={p.handle}>{p.title}</ProductListName>
+                  <ProductListName handle={p.handle} title={p.title}>
+                    {p.title}
+                  </ProductListName>
                   <div style={{ ...styles.detailsRow }}>
                     <ProductListDetails>{p.productType}</ProductListDetails>
                     <Typography paragraph style={{ ...styles.price }}>
