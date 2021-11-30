@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 import ShopContext from './../context/shopContext';
 import {
+  BodyTextSpecial,
   ProductDescDetails,
-  ProductDescBody,
   ProductPageName,
 } from './../components/AppText';
 import { OutlinedButton } from './../components/AppButton';
@@ -41,21 +41,16 @@ export default function Product() {
   const [quantity, setQuantity] = useState('1');
   const { handle } = useParams();
 
-  const { fetchProductWithHandle, addItemToCheckout, state } =
-    useContext(ShopContext);
+  const { addItemToCheckout, state } = useContext(ShopContext);
 
-  const { product } = state;
-
-  useEffect(() => {
-    fetchProductWithHandle(handle);
-  }, [fetchProductWithHandle, handle]);
+  const { products } = state;
+  const product = products.find((p) => p.handle === handle);
 
   const handleChange = (e) => {
     setQuantity(e.target.value);
   };
 
   const handleSubmit = () => {
-    console.log(quantity);
     addItemToCheckout(product.variants[0].id, quantity);
     setQuantity('1');
   };
@@ -76,6 +71,7 @@ export default function Product() {
                 backgroundColor: customTheme.palette.mediumGray.main,
               }}
             />
+
             <ProductPageName>{product.title}</ProductPageName>
             <ProductDescDetails>WINERY: {product.vendor}</ProductDescDetails>
             <ProductDescDetails>
@@ -87,7 +83,7 @@ export default function Product() {
                 ${product.variants && product.variants[0].price}
               </span>
             </ProductDescDetails>
-            <ProductDescBody>{product.description}</ProductDescBody>
+            <BodyTextSpecial>{product.description}</BodyTextSpecial>
             <Box sx={{ ...styles.buttonContainer }}>
               <FormControl fullWidth>
                 <InputLabel>Quantity</InputLabel>

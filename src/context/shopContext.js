@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
-import Client from 'shopify-buy';
+// import Client from 'shopify-buy';
+import Client from 'shopify-buy/index.unoptimized.umd';
 
 const ShopContext = React.createContext();
 
@@ -9,7 +10,6 @@ const client = Client.buildClient({
 });
 
 const initialState = {
-  product: {},
   products: [],
   collections: [],
   checkout: {},
@@ -21,24 +21,9 @@ const shopReducer = (state, action) => {
     case 'FETCH_ALL_PRODUCTS': {
       return { ...state, products: action.payload };
     }
-    case 'FETCH_ONE_PRODUCT': {
-      return { ...state, product: action.payload };
-    }
     case 'UPDATE_CHECKOUT': {
       return { ...state, checkout: action.payload };
     }
-    // case 'CREATE_CHECKOUT': {
-    //   return { ...state, checkout: action.payload };
-    // }
-    // case 'FETCH_CHECKOUT': {
-    //   return { ...state, checkout: action.payload };
-    // }
-    // case 'ADD_CHECKOUT_ITEM': {
-    //   return { ...state, checkout: action.payload };
-    // }
-    // case 'REMOVE_CHECKOUT_ITEM': {
-    //   return { ...state, checkout: action.payload };
-    // }
     case 'FETCH_ALL_COLLECTIONS': {
       return { ...state, collections: action.payload };
     }
@@ -61,7 +46,37 @@ export const ShopProvider = ({ children }) => {
     }
 
     const fetchAllProducts = async () => {
-      const products = await client.product.fetchAll();
+      // Build a custom products query using the unoptimized version of the SDK
+      const productsQuery = client.graphQLClient.query((root) => {
+        root.addConnection('products', { args: { first: 20 } }, (product) => {
+          product.add('availableForSale');
+          product.add('description');
+          product.add('handle');
+          product.add('id');
+          product.add('productType');
+          product.add('tags');
+          product.add('title');
+          product.add('totalInventory');
+          product.add('vendor');
+          product.addConnection(
+            'collections',
+            { args: { first: 5 } },
+            (order) => {
+              order.add('handle');
+            }
+          );
+          product.addConnection('images', { args: { first: 2 } }, (order) => {
+            order.add('src');
+          });
+          product.addConnection('variants', { args: { first: 1 } }, (order) => {
+            order.add('price');
+          });
+        });
+      });
+
+      // Call the send method with the custom products query
+      const response = await client.graphQLClient.send(productsQuery);
+      const { products } = response.model;
       dispatch({
         type: 'FETCH_ALL_PRODUCTS',
         payload: products,
@@ -69,24 +84,16 @@ export const ShopProvider = ({ children }) => {
     };
     fetchAllProducts();
 
-    const fetchCollections = async () => {
-      const collections = await client.collection.fetchAllWithProducts();
-      dispatch({
-        type: 'FETCH_ALL_COLLECTIONS',
-        payload: collections,
-      });
-    };
-    // collections[n].handle, collections[n].title, collections[0].products
-    fetchCollections();
+    // const fetchCollections = async () => {
+    //   const collections = await client.collection.fetchAllWithProducts();
+    //   dispatch({
+    //     type: 'FETCH_ALL_COLLECTIONS',
+    //     payload: collections,
+    //   });
+    // };
+    // // collections[n].handle, collections[n].title, collections[0].products
+    // fetchCollections();
   }, []);
-
-  const fetchProductWithHandle = async (handle) => {
-    const product = await client.product.fetchByHandle(handle);
-    dispatch({
-      type: 'FETCH_ONE_PRODUCT',
-      payload: product,
-    });
-  };
 
   const createCheckout = async () => {
     const checkout = await client.checkout.create();
@@ -156,7 +163,6 @@ export const ShopProvider = ({ children }) => {
     <ShopContext.Provider
       value={{
         state,
-        fetchProductWithHandle,
         fetchCheckout,
         addItemToCheckout,
         updateCheckoutItem,
