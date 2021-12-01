@@ -103,6 +103,26 @@ export default function Product() {
     setQuantity('1');
   };
 
+  const getHeaderColor = (productCollArr) => {
+    for (const coll of productCollArr) {
+      if (coll.handle === 'reds') {
+        return 'maroon';
+      }
+      if (coll.handle === 'whites') {
+        return 'darkGold';
+      }
+      if (coll.handle === 'roses') {
+        return 'darkPink';
+      }
+    }
+  };
+
+  const headerColor = product
+    ? getHeaderColor(product.collections)
+    : 'darkGrayText';
+
+  console.log(headerColor);
+
   if (!product) {
     return <div>Loading...</div>;
   } else {
@@ -116,7 +136,7 @@ export default function Product() {
             <div
               style={{
                 ...styles.accentRule,
-                backgroundColor: customTheme.palette.mediumGray.main,
+                backgroundColor: customTheme.palette[headerColor].main,
               }}
             />
 
