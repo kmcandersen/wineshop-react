@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -7,6 +8,7 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
+import client from '../config/initClient.js';
 import ShopContext from './../context/shopContext';
 import {
   BodyTextSpecial,
@@ -37,9 +39,60 @@ const styles = {
 };
 
 export default function Product() {
-  const { addItemToCheckout, state } = useContext(ShopContext);
-  const { product } = state;
+  const { addItemToCheckout } = useContext(ShopContext);
+  const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState('1');
+
+  const location = useLocation();
+  const productTitle = location.state ? location.state.title : null;
+
+  useEffect(() => {
+    const fetchProductWithTitle = async (title) => {
+      const productQuery = client.graphQLClient.query((root) => {
+        root.addConnection(
+          'products',
+          {
+            args: {
+              first: 1,
+              query: `title:${title}`,
+            },
+          },
+          (product) => {
+            product.add('id');
+            product.add('availableForSale');
+            product.add('description');
+            product.add('handle');
+            product.add('productType');
+            product.add('tags');
+            product.add('title');
+            product.add('totalInventory');
+            product.add('vendor');
+            product.addConnection(
+              'collections',
+              { args: { first: 5 } },
+              (order) => {
+                order.add('handle');
+              }
+            );
+            product.addConnection('images', { args: { first: 2 } }, (order) => {
+              order.add('src');
+            });
+            product.addConnection(
+              'variants',
+              { args: { first: 1 } },
+              (order) => {
+                order.add('price');
+              }
+            );
+          }
+        );
+      });
+
+      const response = await client.graphQLClient.send(productQuery);
+      setProduct(response.model.products[0]);
+    };
+    fetchProductWithTitle(productTitle);
+  }, [location, productTitle]);
 
   const handleChange = (e) => {
     setQuantity(e.target.value);

@@ -5,7 +5,6 @@ const ShopContext = React.createContext();
 
 const initialState = {
   products: [],
-  product: {},
   checkout: {},
   isCartOpen: false,
 };
@@ -14,9 +13,6 @@ const shopReducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_ALL_PRODUCTS': {
       return { ...state, products: action.payload };
-    }
-    case 'FETCH_ONE_PRODUCT': {
-      return { ...state, product: action.payload };
     }
     case 'UPDATE_CHECKOUT': {
       return { ...state, checkout: action.payload };
@@ -77,51 +73,6 @@ export const ShopProvider = ({ children }) => {
     };
     fetchAllProducts();
   }, []);
-
-  const fetchProductWithTitle = async (title) => {
-    const productQuery = client.graphQLClient.query((root) => {
-      root.addConnection(
-        'products',
-        {
-          args: {
-            first: 1,
-            query: `title:${title}`,
-          },
-        },
-        (product) => {
-          product.add('id');
-          product.add('availableForSale');
-          product.add('description');
-          product.add('handle');
-          product.add('productType');
-          product.add('tags');
-          product.add('title');
-          product.add('totalInventory');
-          product.add('vendor');
-          product.addConnection(
-            'collections',
-            { args: { first: 5 } },
-            (order) => {
-              order.add('handle');
-            }
-          );
-          product.addConnection('images', { args: { first: 2 } }, (order) => {
-            order.add('src');
-          });
-          product.addConnection('variants', { args: { first: 1 } }, (order) => {
-            order.add('price');
-          });
-        }
-      );
-    });
-
-    const response = await client.graphQLClient.send(productQuery);
-    const product = response.model.products[0];
-    dispatch({
-      type: 'FETCH_ONE_PRODUCT',
-      payload: product,
-    });
-  };
 
   const createCheckout = async () => {
     const checkout = await client.checkout.create();
@@ -192,7 +143,6 @@ export const ShopProvider = ({ children }) => {
       value={{
         state,
         fetchCheckout,
-        fetchProductWithTitle,
         addItemToCheckout,
         updateCheckoutItem,
         removeLineItem,

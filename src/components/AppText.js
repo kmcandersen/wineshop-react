@@ -86,11 +86,10 @@ export function ProductCardName({ children }) {
 }
 
 export function ProductListName({ children, handle, title }) {
-  const { fetchProductWithTitle } = useContext(ShopContext);
   return (
     <Link
       to={`/products/${handle}`}
-      onClick={() => fetchProductWithTitle(title)}
+      state={{ title }}
       style={{ textDecoration: 'none' }}
     >
       <Typography
