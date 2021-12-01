@@ -15,7 +15,7 @@ const customTheme = createTheme({
     pink: { main: '#EA9999' },
     darkPink: { main: '#C47E7E' }, // passes AA large text
     darkGrayText: { main: '#525252' },
-    mediumGray: { main: '#999' },
+    mediumGray: { main: '#6B6B6B' },
     mediumGrayText: { main: '#6B6B6B' }, // passes AA large text
     lightGray: { main: '#DBDBDB' },
     black: { main: '#1E1E1E' },

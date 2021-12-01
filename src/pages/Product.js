@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Box,
+  Chip,
   Container,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  Typography,
 } from '@mui/material';
+import ReactCountryFlag from 'react-country-flag';
 import client from '../config/initClient.js';
 import ShopContext from './../context/shopContext';
 import {
@@ -103,25 +106,63 @@ export default function Product() {
     setQuantity('1');
   };
 
-  const getHeaderColor = (productCollArr) => {
-    for (const coll of productCollArr) {
-      if (coll.handle === 'reds') {
+  const getTagData = (tagsArr) => {
+    let result = {
+      color: '',
+      headerColor: '',
+      country: '',
+      countrycode: '',
+      rating: '',
+      ratingText: '',
+      region: '',
+      flavors: [],
+    };
+    for (const tag of tagsArr) {
+      if (tag.value.includes('flavor')) {
+        result.flavors.push(tag.value.split('-')[1]);
+      } else {
+        const tagKey = tag.value.split('-')[0];
+        const tagValue = tag.value.split('-')[1];
+        result[tagKey] = tagValue;
+      }
+    }
+    result.headerColor = getHeaderColor(result.color);
+    result.ratingText = getScoreText(result.rating);
+    return result;
+  };
+
+  const getHeaderColor = (colorCategory) => {
+    switch (colorCategory) {
+      case 'red':
         return 'maroon';
-      }
-      if (coll.handle === 'whites') {
-        return 'darkGold';
-      }
-      if (coll.handle === 'roses') {
-        return 'darkPink';
-      }
+      case 'white':
+        return 'gold';
+      case 'rosé':
+        return 'pink';
+      default:
+        return 'lightGray';
     }
   };
 
-  const headerColor = product
-    ? getHeaderColor(product.collections)
-    : 'darkGrayText';
+  const getScoreText = (rating) => {
+    if (rating >= 98) {
+      return 'Classic';
+    } else if (rating >= 94) {
+      return 'Superb';
+    } else if (rating >= 90) {
+      return 'Excellent';
+    } else if (rating >= 87) {
+      return 'Very Good';
+    } else if (rating >= 83) {
+      return 'Good';
+    } else if (rating >= 80) {
+      return 'Acceptable';
+    } else {
+      return '';
+    }
+  };
 
-  console.log(headerColor);
+  const tagData = product && getTagData(product.tags);
 
   if (!product) {
     return <div>Loading...</div>;
@@ -136,11 +177,34 @@ export default function Product() {
             <div
               style={{
                 ...styles.accentRule,
-                backgroundColor: customTheme.palette[headerColor].main,
+                backgroundColor: customTheme.palette[tagData.headerColor].main,
               }}
             />
 
             <ProductPageName>{product.title}</ProductPageName>
+            <div style={{ flex: 1 }}>
+              <Typography
+                paragraph
+                sx={{
+                  color: customTheme.palette.black.main,
+                  mb: '10px',
+                  letterSpacing: '0.25px',
+                }}
+              >
+                ORIGIN:{' '}
+                <span style={{ textTransform: 'capitalize' }}>
+                  {tagData.region}, {tagData.country}
+                </span>
+                <ReactCountryFlag
+                  style={{
+                    margin: '0 0 5px 6px',
+                  }}
+                  countryCode={tagData.countrycode}
+                  svg
+                />
+              </Typography>
+            </div>
+
             <ProductDescDetails>WINERY: {product.vendor}</ProductDescDetails>
             <ProductDescDetails>
               VARIETAL: {product.productType}
@@ -151,7 +215,31 @@ export default function Product() {
                 ${product.variants && product.variants[0].price}
               </span>
             </ProductDescDetails>
+            <ProductDescDetails>
+              SCORE: <span style={{ fontWeight: 700 }}>{tagData.rating}</span>
+              <span
+                style={{
+                  color: customTheme.palette.mediumGrayText.main,
+                }}
+              >
+                &nbsp;&nbsp;{`${tagData.ratingText}`}
+              </span>
+            </ProductDescDetails>
             <BodyTextSpecial>{product.description}</BodyTextSpecial>
+            <Box>
+              {tagData.flavors.map((f) => (
+                <Chip
+                  label={f}
+                  variant='outlined'
+                  size='small'
+                  sx={{
+                    mx: '4px',
+                    borderRadius: '3px',
+                    textTransform: 'capitalize',
+                  }}
+                />
+              ))}
+            </Box>
             <Box sx={{ ...styles.buttonContainer }}>
               <FormControl fullWidth>
                 <InputLabel>Quantity</InputLabel>
