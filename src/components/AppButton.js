@@ -11,6 +11,19 @@ export function TextButton({ children, color = 'primary' }) {
   );
 }
 
+export function FilledButton({ children, onClick }) {
+  return (
+    <Button
+      variant='contained'
+      color='secondary'
+      sx={{ width: '250px', mt: '10px', height: '50px' }}
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  );
+}
+
 export function OutlinedButton({ children, onClick }) {
   return (
     <Button

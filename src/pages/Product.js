@@ -1,15 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  Box,
-  Chip,
-  Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from '@mui/material';
+import { Box, Chip, Container, Typography } from '@mui/material';
 import ReactCountryFlag from 'react-country-flag';
 import client from '../config/initClient.js';
 import ShopContext from './../context/shopContext';
@@ -18,7 +9,7 @@ import {
   ProductDescDetails,
   ProductPageName,
 } from './../components/AppText';
-import { OutlinedButton } from './../components/AppButton';
+import { FilledButton } from './../components/AppButton';
 import customTheme from './../styles/theme.js';
 
 const styles = {
@@ -44,7 +35,6 @@ const styles = {
 export default function Product() {
   const { addItemToCheckout } = useContext(ShopContext);
   const [product, setProduct] = useState();
-  const [quantity, setQuantity] = useState('1');
 
   const location = useLocation();
   const productTitle = location.state ? location.state.title : null;
@@ -97,13 +87,8 @@ export default function Product() {
     fetchProductWithTitle(productTitle);
   }, [location, productTitle]);
 
-  const handleChange = (e) => {
-    setQuantity(e.target.value);
-  };
-
   const handleSubmit = () => {
-    addItemToCheckout(product.variants[0].id, quantity);
-    setQuantity('1');
+    addItemToCheckout(product.variants[0].id, 1);
   };
 
   const getTagData = (tagsArr) => {
@@ -227,8 +212,9 @@ export default function Product() {
             </ProductDescDetails>
             <BodyTextSpecial>{product.description}</BodyTextSpecial>
             <Box>
-              {tagData.flavors.map((f) => (
+              {tagData.flavors.map((f, index) => (
                 <Chip
+                  key={index}
                   label={f}
                   variant='outlined'
                   size='small'
@@ -241,26 +227,12 @@ export default function Product() {
               ))}
             </Box>
             <Box sx={{ ...styles.buttonContainer }}>
-              <FormControl fullWidth>
-                <InputLabel>Quantity</InputLabel>
-
-                <Select
-                  value={quantity}
-                  name='quantity'
-                  label='Quantity'
-                  onChange={handleChange}
-                >
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
-                </Select>
-              </FormControl>
-              {product.variants && (
-                <OutlinedButton onClick={handleSubmit}>
-                  Add to Cart
-                </OutlinedButton>
+              {!product.availableForSale ? (
+                <BodyTextSpecial color='mediumGrayText'>
+                  This item is currently sold out.
+                </BodyTextSpecial>
+              ) : (
+                <FilledButton onClick={handleSubmit}>Add to Cart</FilledButton>
               )}
             </Box>
           </Box>

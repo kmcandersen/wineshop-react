@@ -155,12 +155,12 @@ export function ProductDescDetails({ children }) {
   );
 }
 
-export function BodyTextSpecial({ children }) {
+export function BodyTextSpecial({ children, color = 'black' }) {
   return (
     <Typography
       paragraph
       sx={{
-        color: customTheme.palette.black.main,
+        color: customTheme.palette[color].main,
         fontStyle: 'italic',
         mt: '20px',
       }}
