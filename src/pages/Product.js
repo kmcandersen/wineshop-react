@@ -88,7 +88,7 @@ export default function Product() {
   }, [location, productTitle]);
 
   const handleSubmit = () => {
-    addItemToCheckout(product.variants[0].id, 1);
+    addItemToCheckout(product.variants[0].id, 1, product.totalInventory);
   };
 
   const getTagData = (tagsArr) => {
