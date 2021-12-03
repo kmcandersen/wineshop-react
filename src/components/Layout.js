@@ -5,18 +5,18 @@ import Navbar from './Navbar';
 
 const styles = {
   appContainer: {
-    height: '100vh',
+    height: `calc(100vh-65px)`,
   },
   container: {
     flexDirection: 'column',
     alignItems: 'center',
     display: 'flex',
-    py: '64px',
-    my: '9vh',
-    height: '91vh',
+    mt: `calc(65px + 60px)`,
+    mb: '60px',
     border: '1px solid red',
   },
 };
+
 export default function Layout(props) {
   return (
     <div style={{ ...styles.appContainer }}>

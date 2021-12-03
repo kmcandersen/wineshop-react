@@ -21,7 +21,7 @@ const styles = {
     marginRight: '20px',
   },
   buttonContainer: {
-    my: '30px',
+    mt: '30px',
     width: '250px',
   },
   labelImage: {
