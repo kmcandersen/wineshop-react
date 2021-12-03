@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container } from '@mui/material';
 import client from '../config/initClient.js';
 import { OutlinedHeroLinkButton } from '../components/AppButton';
@@ -11,16 +12,25 @@ const featuredId = 'Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIxMzE5MTUyNDUxNQ==';
 
 export default function Home() {
   const [collection, setCollection] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCollection = async (collectionId) => {
-      const collection = await client.collection.fetchWithProducts(
-        collectionId
-      );
-      setCollection(collection);
+      try {
+        const collection = await client.collection.fetchWithProducts(
+          collectionId
+        );
+        if (collection.errors) {
+          throw new Error('failed to fetch collection');
+        }
+        setCollection(collection);
+      } catch (error) {
+        console.log('error: ', error);
+        navigate('/not-found', { state: { message: 'failed request' } });
+      }
     };
     fetchCollection(featuredId);
-  }, []);
+  }, [navigate]);
 
   return (
     <Container>

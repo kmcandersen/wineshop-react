@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
 import client from '../config/initClient.js';
 import ShopContext from '../context/shopContext';
@@ -50,20 +50,29 @@ export default function ProductList() {
 
   const location = useLocation();
   const collId = location.state ? location.state.collId : null;
+  const navigate = useNavigate();
 
   useEffect(() => {
     // if '/collections'
     if (collId) {
       const fetchCollection = async (collectionId) => {
-        const collection = await client.collection.fetchWithProducts(
-          collectionId
-        );
-        const headerColor = getHeaderColor(collection.handle);
-        setItemsToShow({
-          title: `All ${collection.title}`,
-          products: collection.products,
-          headerColor: headerColor,
-        });
+        try {
+          const collection = await client.collection.fetchWithProducts(
+            collectionId
+          );
+          if (collection.errors) {
+            throw new Error('failed to fetch collection');
+          }
+          const headerColor = getHeaderColor(collection.handle);
+          setItemsToShow({
+            title: `All ${collection.title}`,
+            products: collection.products,
+            headerColor: headerColor,
+          });
+        } catch (error) {
+          console.log('error: ', error);
+          navigate('/not-found', { state: { message: 'failed request' } });
+        }
       };
       fetchCollection(collId);
     } else {
@@ -74,7 +83,7 @@ export default function ProductList() {
         headerColor: 'mediumGrayText',
       });
     }
-  }, [collId, location, products]);
+  }, [collId, location, navigate, products]);
 
   const getHeaderColor = (handle) => {
     if (handle === 'reds') {

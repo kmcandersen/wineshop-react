@@ -14,6 +14,7 @@ export default function App() {
         <Route path='products' element={<ProductList />} />
         <Route path='products/:handle' element={<Product />} />
         <Route path='collections/:handle' element={<ProductList />} />
+        <Route path='not-found' element={<NotFound />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Layout>

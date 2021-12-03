@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
 import client from '../config/initClient.js';
 
 const ShopContext = React.createContext();
@@ -28,6 +29,8 @@ const shopReducer = (state, action) => {
 export const ShopProvider = ({ children }) => {
   const [state, dispatch] = useReducer(shopReducer, initialState);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (localStorage.checkout_id) {
       fetchCheckout(localStorage.checkout_id);
@@ -37,98 +40,144 @@ export const ShopProvider = ({ children }) => {
 
     const fetchAllProducts = async () => {
       // Build a custom products query using the unoptimized version of the SDK
-      const productsQuery = client.graphQLClient.query((root) => {
-        root.addConnection('products', { args: { first: 20 } }, (product) => {
-          product.add('availableForSale');
-          product.add('description');
-          product.add('handle');
-          product.add('id');
-          product.add('productType');
-          product.add('tags');
-          product.add('title');
-          product.add('totalInventory');
-          product.add('vendor');
-          product.addConnection(
-            'collections',
-            { args: { first: 5 } },
-            (order) => {
-              order.add('handle');
-            }
-          );
-          product.addConnection('images', { args: { first: 2 } }, (order) => {
-            order.add('src');
-          });
-          product.addConnection('variants', { args: { first: 1 } }, (order) => {
-            order.add('price');
+      try {
+        const productsQuery = client.graphQLClient.query((root) => {
+          root.addConnection('products', { args: { first: 20 } }, (product) => {
+            product.add('availableForSale');
+            product.add('description');
+            product.add('handle');
+            product.add('id');
+            product.add('productType');
+            product.add('tags');
+            product.add('title');
+            product.add('totalInventory');
+            product.add('vendor');
+            product.addConnection(
+              'collections',
+              { args: { first: 5 } },
+              (order) => {
+                order.add('handle');
+              }
+            );
+            product.addConnection('images', { args: { first: 2 } }, (order) => {
+              order.add('src');
+            });
+            product.addConnection(
+              'variants',
+              { args: { first: 1 } },
+              (order) => {
+                order.add('price');
+              }
+            );
           });
         });
-      });
-
-      const response = await client.graphQLClient.send(productsQuery);
-      const { products } = response.model;
-      dispatch({
-        type: 'FETCH_ALL_PRODUCTS',
-        payload: products,
-      });
+        const response = await client.graphQLClient.send(productsQuery);
+        if (response.errors) {
+          throw new Error('fetch all products failed');
+        }
+        const { products } = response.model;
+        dispatch({
+          type: 'FETCH_ALL_PRODUCTS',
+          payload: products,
+        });
+      } catch (error) {
+        console.log('error: ', error);
+        navigate('/not-found', { state: { message: 'failed request' } });
+      }
     };
     fetchAllProducts();
-  }, []);
+  }, [navigate]);
 
   const createCheckout = async () => {
-    const checkout = await client.checkout.create();
-    localStorage.setItem('checkout_id', checkout.id);
-    dispatch({
-      type: 'UPDATE_CHECKOUT',
-      payload: checkout,
-    });
+    try {
+      const checkout = await client.checkout.create();
+      if (checkout.errors) {
+        throw new Error('create checkout failed');
+      }
+      localStorage.setItem('checkout_id', checkout.id);
+      dispatch({
+        type: 'UPDATE_CHECKOUT',
+        payload: checkout,
+      });
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const fetchCheckout = async (checkoutId) => {
-    const checkout = await client.checkout.fetch(checkoutId);
-    dispatch({
-      type: 'UPDATE_CHECKOUT',
-      payload: checkout,
-    });
+    try {
+      const checkout = await client.checkout.fetch(checkoutId);
+      if (checkout.errors) {
+        throw new Error('fetch checkout failed');
+      }
+      dispatch({
+        type: 'UPDATE_CHECKOUT',
+        payload: checkout,
+      });
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const addItemToCheckout = async (variantId, quantity) => {
-    const lineItemToAdd = [
-      { variantId: variantId, quantity: parseInt(quantity, 10) },
-    ];
-    const checkout = await client.checkout.addLineItems(
-      state.checkout.id,
-      lineItemToAdd
-    );
-    dispatch({
-      type: 'UPDATE_CHECKOUT',
-      payload: checkout,
-    });
-    toggleCart(true);
+    try {
+      const lineItemToAdd = [
+        { variantId: variantId, quantity: parseInt(quantity, 10) },
+      ];
+      const checkout = await client.checkout.addLineItems(
+        state.checkout.id,
+        lineItemToAdd
+      );
+      if (checkout.errors) {
+        throw new Error('failed to add item');
+      }
+      dispatch({
+        type: 'UPDATE_CHECKOUT',
+        payload: checkout,
+      });
+      toggleCart(true);
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const updateCheckoutItem = async (variantId, quantity) => {
-    const lineItemsToUpdate = [
-      { id: variantId, quantity: parseInt(quantity, 10) },
-    ];
-    const checkout = await client.checkout.updateLineItems(
-      state.checkout.id,
-      lineItemsToUpdate
-    );
-    dispatch({
-      type: 'UPDATE_CHECKOUT',
-      payload: checkout,
-    });
+    try {
+      const lineItemsToUpdate = [
+        { id: variantId, quantity: parseInt(quantity, 10) },
+      ];
+      const checkout = await client.checkout.updateLineItems(
+        state.checkout.id,
+        lineItemsToUpdate
+      );
+      if (checkout.errors) {
+        throw new Error('failed to update item');
+      }
+      dispatch({
+        type: 'UPDATE_CHECKOUT',
+        payload: checkout,
+      });
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const removeLineItem = async (lineItemIdToRemove) => {
-    const checkout = await client.checkout.removeLineItems(
-      state.checkout.id,
-      lineItemIdToRemove
-    );
-    dispatch({
-      type: 'UPDATE_CHECKOUT',
-      payload: checkout,
-    });
+    try {
+      const checkout = await client.checkout.removeLineItems(
+        state.checkout.id,
+        lineItemIdToRemove
+      );
+      if (checkout.errors) {
+        throw new Error('failed to remove item');
+      }
+      dispatch({
+        type: 'UPDATE_CHECKOUT',
+        payload: checkout,
+      });
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const toggleCart = (bool) => {

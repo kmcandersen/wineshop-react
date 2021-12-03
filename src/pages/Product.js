@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Chip, Container, Typography } from '@mui/material';
 import ReactCountryFlag from 'react-country-flag';
 import client from '../config/initClient.js';
@@ -38,54 +38,66 @@ export default function Product() {
 
   const location = useLocation();
   const productTitle = location.state ? location.state.title : null;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProductWithTitle = async (title) => {
-      const productQuery = client.graphQLClient.query((root) => {
-        root.addConnection(
-          'products',
-          {
-            args: {
-              first: 1,
-              query: `title:${title}`,
+      try {
+        const productQuery = client.graphQLClient.query((root) => {
+          root.addConnection(
+            'products',
+            {
+              args: {
+                first: 1,
+                query: `title:${title}`,
+              },
             },
-          },
-          (product) => {
-            product.add('id');
-            product.add('availableForSale');
-            product.add('description');
-            product.add('handle');
-            product.add('productType');
-            product.add('tags');
-            product.add('title');
-            product.add('totalInventory');
-            product.add('vendor');
-            product.addConnection(
-              'collections',
-              { args: { first: 5 } },
-              (order) => {
-                order.add('handle');
-              }
-            );
-            product.addConnection('images', { args: { first: 2 } }, (order) => {
-              order.add('src');
-            });
-            product.addConnection(
-              'variants',
-              { args: { first: 1 } },
-              (order) => {
-                order.add('price');
-              }
-            );
-          }
-        );
-      });
-
-      const response = await client.graphQLClient.send(productQuery);
-      setProduct(response.model.products[0]);
+            (product) => {
+              product.add('id');
+              product.add('availableForSale');
+              product.add('description');
+              product.add('handle');
+              product.add('productType');
+              product.add('tags');
+              product.add('title');
+              product.add('totalInventory');
+              product.add('vendor');
+              product.addConnection(
+                'collections',
+                { args: { first: 5 } },
+                (order) => {
+                  order.add('handle');
+                }
+              );
+              product.addConnection(
+                'images',
+                { args: { first: 2 } },
+                (order) => {
+                  order.add('src');
+                }
+              );
+              product.addConnection(
+                'variants',
+                { args: { first: 1 } },
+                (order) => {
+                  order.add('price');
+                }
+              );
+            }
+          );
+        });
+        const response = await client.graphQLClient.send(productQuery);
+        if (response.errors) {
+          throw new Error('failed to fetch product');
+        }
+        setProduct(response.model.products[0]);
+      } catch (error) {
+        console.log('error: ', error);
+        navigate('/not-found', { state: { message: 'failed request' } });
+      }
     };
     fetchProductWithTitle(productTitle);
-  }, [location, productTitle]);
+  }, [location, navigate, productTitle]);
 
   const handleSubmit = () => {
     addItemToCheckout(product.variants[0].id, 1, product.totalInventory);
