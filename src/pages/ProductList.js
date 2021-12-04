@@ -60,9 +60,6 @@ export default function ProductList() {
           const collection = await client.collection.fetchWithProducts(
             collectionId
           );
-          if (collection.errors) {
-            throw new Error('failed to fetch collection');
-          }
           const headerColor = getHeaderColor(collection.handle);
           setItemsToShow({
             title: `All ${collection.title}`,

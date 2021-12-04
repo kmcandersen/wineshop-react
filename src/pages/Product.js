@@ -87,9 +87,6 @@ export default function Product() {
           );
         });
         const response = await client.graphQLClient.send(productQuery);
-        if (response.errors) {
-          throw new Error('failed to fetch product');
-        }
         setProduct(response.model.products[0]);
       } catch (error) {
         console.log('error: ', error);
@@ -100,7 +97,7 @@ export default function Product() {
   }, [location, navigate, productTitle]);
 
   const handleSubmit = () => {
-    addItemToCheckout(product.variants[0].id, 1, product.totalInventory);
+    addItemToCheckout(product.variants[0].id, 1);
   };
 
   const getTagData = (tagsArr) => {

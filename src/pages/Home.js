@@ -15,9 +15,6 @@ export default function Home() {
         const collection = await client.collection.fetchWithProducts(
           collectionId
         );
-        if (collection.errors) {
-          throw new Error('failed to fetch collection');
-        }
         setCollection(collection);
       } catch (error) {
         console.log('error: ', error);

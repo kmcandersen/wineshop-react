@@ -72,16 +72,13 @@ export const ShopProvider = ({ children }) => {
           });
         });
         const response = await client.graphQLClient.send(productsQuery);
-        if (response.errors) {
-          throw new Error('fetch all products failed');
-        }
         const { products } = response.model;
         dispatch({
           type: 'FETCH_ALL_PRODUCTS',
           payload: products,
         });
       } catch (error) {
-        console.log('error: ', error);
+        console.log('error: ', error.message);
         navigate('/not-found', { state: { message: 'failed request' } });
       }
     };
@@ -91,9 +88,6 @@ export const ShopProvider = ({ children }) => {
   const createCheckout = async () => {
     try {
       const checkout = await client.checkout.create();
-      if (checkout.errors) {
-        throw new Error('create checkout failed');
-      }
       localStorage.setItem('checkout_id', checkout.id);
       dispatch({
         type: 'UPDATE_CHECKOUT',
@@ -107,9 +101,6 @@ export const ShopProvider = ({ children }) => {
   const fetchCheckout = async (checkoutId) => {
     try {
       const checkout = await client.checkout.fetch(checkoutId);
-      if (checkout.errors) {
-        throw new Error('fetch checkout failed');
-      }
       dispatch({
         type: 'UPDATE_CHECKOUT',
         payload: checkout,
@@ -128,9 +119,6 @@ export const ShopProvider = ({ children }) => {
         state.checkout.id,
         lineItemToAdd
       );
-      if (checkout.errors) {
-        throw new Error('failed to add item');
-      }
       dispatch({
         type: 'UPDATE_CHECKOUT',
         payload: checkout,
@@ -150,9 +138,6 @@ export const ShopProvider = ({ children }) => {
         state.checkout.id,
         lineItemsToUpdate
       );
-      if (checkout.errors) {
-        throw new Error('failed to update item');
-      }
       dispatch({
         type: 'UPDATE_CHECKOUT',
         payload: checkout,
@@ -168,9 +153,6 @@ export const ShopProvider = ({ children }) => {
         state.checkout.id,
         lineItemIdToRemove
       );
-      if (checkout.errors) {
-        throw new Error('failed to remove item');
-      }
       dispatch({
         type: 'UPDATE_CHECKOUT',
         payload: checkout,
