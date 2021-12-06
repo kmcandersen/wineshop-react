@@ -76,9 +76,14 @@ export function Subhead2({ children, color = 'black', size = 'med' }) {
 export function ProductCardName({ children }) {
   return (
     <Typography
-      variant='body1'
+      // variant='body1'
       component='h3'
-      sx={{ fontSize: '1.25rem', fontWeight: 700 }}
+      sx={{
+        fontSize: '1.1rem',
+        fontWeight: 700,
+        lineHeight: '1.4rem',
+        mb: '4px',
+      }}
     >
       {children}
     </Typography>

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Chip, Container, Typography } from '@mui/material';
 import ReactCountryFlag from 'react-country-flag';
 import client from '../config/initClient.js';
+import { getTagData } from '../utils/helperFunctions.js';
 import ShopContext from './../context/shopContext';
 import {
   BodyTextSpecial,
@@ -10,10 +11,12 @@ import {
   ProductPageName,
 } from './../components/AppText';
 import { FilledButton } from './../components/AppButton';
+import ProductCardGroup from '../components/ProductCardGroup';
+import collectionIds from '../config/collectionIds.js';
 import customTheme from './../styles/theme.js';
 
 const styles = {
-  accentRule: {
+  accentStripe: {
     width: '100px',
     height: '10px',
   },
@@ -35,13 +38,15 @@ const styles = {
 export default function Product() {
   const { addItemToCheckout } = useContext(ShopContext);
   const [product, setProduct] = useState();
-
+  const [tagData, setTagData] = useState();
+  const [relatedProducts, setRelatedProducts] = useState();
   const location = useLocation();
   const productTitle = location.state ? location.state.title : null;
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProductWithTitle = async (title) => {
+    // fetch current product & set state; parse current product.tags & set state; fetch items in product's matching color collection; remove current product from collection.products--remainder are the related items--& set state
+    const fetchProductInfo = async (title) => {
       try {
         const productQuery = client.graphQLClient.query((root) => {
           root.addConnection(
@@ -87,80 +92,32 @@ export default function Product() {
           );
         });
         const response = await client.graphQLClient.send(productQuery);
-        setProduct(response.model.products[0]);
+        const currentProduct = response.model.products[0];
+        setProduct(currentProduct);
+        const tagsObj = getTagData(currentProduct.tags);
+        setTagData(tagsObj);
+        const collName = `${tagsObj.color}s`;
+        const collectionId = collectionIds[collName];
+        const colorCollection = await client.collection.fetchWithProducts(
+          collectionId
+        );
+        const filteredResult = colorCollection.products.filter(
+          (item) => item.id !== currentProduct.id
+        );
+        setRelatedProducts(filteredResult);
       } catch (error) {
         console.log('error: ', error);
         navigate('/not-found', { state: { message: 'failed request' } });
       }
     };
-    fetchProductWithTitle(productTitle);
+    fetchProductInfo(productTitle);
   }, [location, navigate, productTitle]);
 
   const handleSubmit = () => {
     addItemToCheckout(product.variants[0].id, 1);
   };
 
-  const getTagData = (tagsArr) => {
-    let result = {
-      color: '',
-      headerColor: '',
-      country: '',
-      countrycode: '',
-      rating: '',
-      ratingText: '',
-      region: '',
-      flavors: [],
-    };
-    for (const tag of tagsArr) {
-      if (tag.value.includes('flavor')) {
-        result.flavors.push(tag.value.split('-')[1]);
-      } else {
-        const tagKey = tag.value.split('-')[0];
-        const tagValue = tag.value.split('-')[1];
-        result[tagKey] = tagValue;
-      }
-    }
-    result.headerColor = getHeaderColor(result.color);
-    result.ratingText = getScoreText(result.rating);
-    return result;
-  };
-
-  const getHeaderColor = (colorCategory) => {
-    switch (colorCategory) {
-      case 'red':
-        return 'maroon';
-      case 'white':
-        return 'gold';
-      case 'rosé':
-        return 'pink';
-      default:
-        return 'lightGray';
-    }
-  };
-
-  const getScoreText = (rating) => {
-    if (rating >= 98) {
-      return 'Classic';
-    } else if (rating >= 94) {
-      return 'Superb';
-    } else if (rating >= 90) {
-      return 'Excellent';
-    } else if (rating >= 87) {
-      return 'Very Good';
-    } else if (rating >= 83) {
-      return 'Good';
-    } else if (rating >= 80) {
-      return 'Acceptable';
-    } else {
-      return '';
-    }
-  };
-
-  const tagData = product && getTagData(product.tags);
-
-  if (!product) {
-    return <div>Loading...</div>;
-  } else {
+  if (product && tagData) {
     return (
       <Container>
         <Box sx={{ display: 'flex' }}>
@@ -170,8 +127,8 @@ export default function Product() {
           <Box sx={{ ...styles.textContent }}>
             <div
               style={{
-                ...styles.accentRule,
-                backgroundColor: customTheme.palette[tagData.headerColor].main,
+                ...styles.accentStripe,
+                backgroundColor: customTheme.palette[tagData.stripeColor].main,
               }}
             />
 
@@ -256,7 +213,15 @@ export default function Product() {
             )}
           </Box>
         </Box>
+        {relatedProducts && (
+          <ProductCardGroup
+            stripeColor={tagData.stripeColor}
+            items={relatedProducts}
+          />
+        )}
       </Container>
     );
+  } else {
+    return <div>Loading...</div>;
   }
 }

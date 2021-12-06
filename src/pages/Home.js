@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import client from '../config/initClient.js';
 import collectionIds from '../config/collectionIds.js';
 import { OutlinedHeroLinkButton } from '../components/AppButton';
+import ProductCardGroup from '../components/ProductCardGroup';
 
 export default function Home() {
   const [collection, setCollection] = useState({});
@@ -26,26 +27,29 @@ export default function Home() {
 
   return (
     <Container>
-      <OutlinedHeroLinkButton
-        route='/collections/reds'
-        collId={collectionIds.reds}
-      >
-        Shop all reds
-      </OutlinedHeroLinkButton>
-      <OutlinedHeroLinkButton
-        color='darkGold'
-        route='/collections/whites'
-        collId={collectionIds.whites}
-      >
-        Shop all whites
-      </OutlinedHeroLinkButton>
-      <OutlinedHeroLinkButton
-        color='darkPink'
-        route='/collections/roses'
-        collId={collectionIds.roses}
-      >
-        Shop all rosés
-      </OutlinedHeroLinkButton>
+      <Box>
+        <OutlinedHeroLinkButton
+          route='/collections/reds'
+          collId={collectionIds.reds}
+        >
+          Shop all reds
+        </OutlinedHeroLinkButton>
+        <OutlinedHeroLinkButton
+          color='darkGold'
+          route='/collections/whites'
+          collId={collectionIds.whites}
+        >
+          Shop all whites
+        </OutlinedHeroLinkButton>
+        <OutlinedHeroLinkButton
+          color='darkPink'
+          route='/collections/roses'
+          collId={collectionIds.roses}
+        >
+          Shop all rosés
+        </OutlinedHeroLinkButton>
+      </Box>
+      <ProductCardGroup items={collection.products} />
     </Container>
   );
 }
