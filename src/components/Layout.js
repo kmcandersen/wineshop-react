@@ -13,7 +13,7 @@ const styles = {
     display: 'flex',
     mt: `calc(65px + 60px)`,
     mb: '60px',
-    border: '1px solid red',
+    maxWidth: '100%',
   },
 };
 

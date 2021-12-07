@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Chip, Container, Typography } from '@mui/material';
+import { Box, Chip, Container, Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import ReactCountryFlag from 'react-country-flag';
 import client from '../config/initClient.js';
 import { getTagData } from '../utils/helperFunctions.js';
@@ -20,15 +21,15 @@ const styles = {
     width: '100px',
     height: '10px',
   },
-  bottleImage: {
-    marginRight: '20px',
-  },
   buttonContainer: {
     mt: '30px',
     width: '250px',
   },
-  labelImage: {
-    marginTop: '10px',
+  imageContainerXS: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    width: '100%',
+    mt: '30px',
   },
   textContent: {
     mx: '25px',
@@ -43,6 +44,10 @@ export default function Product() {
   const location = useLocation();
   const productTitle = location.state ? location.state.title : null;
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const xsScreen = useMediaQuery('(max-width:444px)');
 
   useEffect(() => {
     // fetch current product & set state; parse current product.tags & set state; fetch items in product's matching color collection; remove current product from collection.products--remainder are the related items--& set state
@@ -121,9 +126,27 @@ export default function Product() {
     return (
       <Container>
         <Box sx={{ display: 'flex' }}>
-          {product.images && (
-            <img src={product.images[0].src} height={320} alt='bottle' />
+          {!xsScreen && (
+            <Box sx={{ mr: '15px' }}>
+              {product.images && (
+                <img
+                  src={product.images[0].src}
+                  height={320}
+                  alt='bottle'
+                  style={{ margin: '10px 0' }}
+                />
+              )}
+              {smScreen && product.images && (
+                <img
+                  src={product.images[1].src}
+                  width={'95%'}
+                  alt='bottle label'
+                  style={{ margin: '10px 0' }}
+                />
+              )}
+            </Box>
           )}
+
           <Box sx={{ ...styles.textContent }}>
             <div
               style={{
@@ -185,13 +208,31 @@ export default function Product() {
                   variant='outlined'
                   size='small'
                   sx={{
-                    mx: '4px',
+                    m: '4px',
                     borderRadius: '3px',
                     textTransform: 'capitalize',
                   }}
                 />
               ))}
             </Box>
+            {xsScreen && (
+              <Box
+                sx={{
+                  ...styles.imageContainerXS,
+                }}
+              >
+                {product.images && (
+                  <img src={product.images[0].src} height={320} alt='bottle' />
+                )}
+                <img
+                  src={product.images[1].src}
+                  width={110}
+                  alt='bottle label'
+                  style={{ marginLeft: '30px' }}
+                />
+              </Box>
+            )}
+
             <Box sx={{ ...styles.buttonContainer }}>
               {!product.availableForSale ? (
                 <BodyTextSpecial color='mediumGrayText'>
@@ -203,22 +244,25 @@ export default function Product() {
             </Box>
           </Box>
           <Box>
-            {product.images && (
+            {!smScreen && product.images && (
               <img
                 src={product.images[1].src}
                 height={150}
                 alt='bottle label'
-                style={{ ...styles.labelImage }}
+                style={{ margin: '10px 0' }}
               />
             )}
           </Box>
         </Box>
-        {relatedProducts && (
-          <ProductCardGroup
-            stripeColor={tagData.stripeColor}
-            items={relatedProducts}
-          />
-        )}
+        <Box>
+          {relatedProducts && (
+            <ProductCardGroup
+              color={tagData.stripeColor}
+              items={relatedProducts}
+              headerText='May we recommend...'
+            />
+          )}
+        </Box>
       </Container>
     );
   } else {

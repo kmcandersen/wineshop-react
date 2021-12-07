@@ -31,7 +31,7 @@ export const getStripeColor = (colorCategory) => {
       return 'maroon';
     case 'white':
       return 'gold';
-    case 'rosé':
+    case 'rose':
       return 'pink';
     default:
       return 'lightGray';

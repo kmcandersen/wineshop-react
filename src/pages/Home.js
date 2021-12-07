@@ -49,7 +49,10 @@ export default function Home() {
           Shop all rosés
         </OutlinedHeroLinkButton>
       </Box>
-      <ProductCardGroup items={collection.products} />
+      <ProductCardGroup
+        items={collection.products}
+        headerText='Favorite Summer Sips'
+      />
     </Container>
   );
 }

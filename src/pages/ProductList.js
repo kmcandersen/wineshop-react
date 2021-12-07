@@ -114,7 +114,7 @@ export default function ProductList() {
                 <img
                   src={p.images[0].src}
                   alt='bottle'
-                  height={60}
+                  height={55}
                   style={{ ...styles.image }}
                 />
                 <div style={{ ...styles.textContainer }}>

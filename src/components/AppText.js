@@ -21,17 +21,20 @@ export function PageHead({ children, color = 'mediumGrayText' }) {
   );
 }
 
-export function SectionHead({ children }) {
+export function SectionHead({ headerText }) {
   return (
     <Typography
       component='h2'
       sx={{
         fontFamily: 'Playfair Display',
-        fontSize: '2.2rem',
+        fontSize: '1.8rem',
         letterSpacing: '0.25px',
+        textAlign: 'center',
+        mb: '40px',
+        color: customTheme.palette.mediumGrayText.main,
       }}
     >
-      {children}
+      {headerText}
     </Typography>
   );
 }
@@ -79,10 +82,12 @@ export function ProductCardName({ children }) {
       // variant='body1'
       component='h3'
       sx={{
-        fontSize: '1.1rem',
+        color: customTheme.palette.black.main,
+        fontSize: '1rem',
         fontWeight: 700,
         lineHeight: '1.4rem',
-        mb: '4px',
+        mb: '5px',
+        mt: '6px',
       }}
     >
       {children}

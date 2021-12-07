@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardMedia } from '@mui/material';
+import { Box } from '@mui/material';
 import customTheme from './../styles/theme.js';
 import ShopContext from './../context/shopContext';
 import { getStripeColor } from '../utils/helperFunctions.js';
@@ -32,26 +32,30 @@ export default function ProductCard(props) {
       state={{ title: item.title }}
       style={{ textDecoration: 'none' }}
     >
-      <Card sx={{ maxWidth: 345 }}>
-        <div
-          style={{
-            backgroundColor: customTheme.palette[stripeColor].main,
-            height: '5px',
-          }}
-        ></div>
-        <CardMedia
-          component='img'
-          alt='bottle'
-          height='140'
-          image={item.images[0].src}
-        />
-        <CardContent>
-          <ProductCardName>{item.title}</ProductCardName>
-          <ProductDescDetails>
-            <span>${item.variants[0].price}</span>
-          </ProductDescDetails>
-        </CardContent>
-      </Card>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', p: '10px' }}>
+          <img
+            src={item.images[0].src}
+            height={75}
+            alt='bottle'
+            style={{ paddingRight: '15px' }}
+          />
+
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <div
+              style={{
+                backgroundColor: customTheme.palette[stripeColor].main,
+                height: '6px',
+                width: '37px',
+              }}
+            ></div>
+            <ProductCardName>{item.title}</ProductCardName>
+            <ProductDescDetails>
+              <span>${item.variants[0].price}</span>
+            </ProductDescDetails>
+          </Box>
+        </Box>
+      </Box>
     </Link>
   );
 }

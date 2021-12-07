@@ -1,20 +1,24 @@
 import React from 'react';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import ProductCard from './ProductCard';
+import { SectionHead } from './AppText';
 
-export default function ProductCardGroup({ items, color }) {
+export default function ProductCardGroup({ items, color, headerText }) {
   const stripeColor = color ? color : null;
 
   if (items) {
     return (
-      <Grid container spacing={2}>
-        <Grid item sm={6} md={3}>
+      <Box sx={{ flexGrow: 1, mt: '80px' }}>
+        <SectionHead headerText={headerText} />
+        <Grid container columnSpacing={3} rowSpacing={2} direction='row'>
           {items.map((p) => (
-            <ProductCard key={p.id} item={p} stripeColor={stripeColor} />
+            <Grid item xs={12} sm={6} md={4}>
+              <ProductCard key={p.id} item={p} stripeColor={stripeColor} />
+            </Grid>
           ))}
         </Grid>
-      </Grid>
+      </Box>
     );
   } else {
     return null;
