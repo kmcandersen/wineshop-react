@@ -73,7 +73,7 @@ export default function CartItem({ item }) {
           style={{ ...styles.image }}
         />
         <Box sx={{ ...styles.textContainer }}>
-          <CartListName handle={item.variant.product.handle}>
+          <CartListName handle={item.variant.product.handle} title={item.title}>
             {item.title}
           </CartListName>
           <Box sx={{ ...styles.flexRowSpaceBw }}>

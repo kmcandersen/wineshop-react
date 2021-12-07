@@ -175,11 +175,12 @@ export function BodyTextSpecial({ children, color = 'black' }) {
   );
 }
 
-export function CartListName({ children, handle }) {
+export function CartListName({ children, handle, title }) {
   const { toggleCart } = useContext(ShopContext);
   return (
     <Link
       to={`/products/${handle}`}
+      state={{ title }}
       onClick={() => toggleCart(false)}
       style={{ textDecoration: 'none' }}
     >
