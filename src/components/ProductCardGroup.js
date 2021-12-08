@@ -13,8 +13,8 @@ export default function ProductCardGroup({ items, color, headerText }) {
         <SectionHead headerText={headerText} />
         <Grid container columnSpacing={3} rowSpacing={2} direction='row'>
           {items.map((p) => (
-            <Grid item xs={12} sm={6} md={4}>
-              <ProductCard key={p.id} item={p} stripeColor={stripeColor} />
+            <Grid item key={p.id} xs={12} sm={6} md={4}>
+              <ProductCard item={p} stripeColor={stripeColor} />
             </Grid>
           ))}
         </Grid>

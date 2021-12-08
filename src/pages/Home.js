@@ -9,6 +9,7 @@ import ProductCardGroup from '../components/ProductCardGroup';
 import grapesPhoto from '../assets/grapes-on-table.jpg';
 import bottlesPhoto from '../assets/bottles-on-shelf.jpg';
 import glassesPhoto from '../assets/wine-glasses.jpg';
+import '../styles/App.css';
 
 const styles = {
   box: {
@@ -32,12 +33,13 @@ const styles = {
     fontFamily: 'Playfair Display',
     textAlign: 'center',
     fontSize: '2rem',
-    p: '10px',
+    p: '15px',
   },
 };
 
 export default function Home() {
   const [collection, setCollection] = useState({});
+  const [animate, setAnimate] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +57,18 @@ export default function Home() {
     fetchCollection(collectionIds.featured);
   }, [navigate]);
 
+  useEffect(() => {
+    if (window.sessionStorage.getItem('firstLoadDone') === null) {
+      setAnimate(true);
+      // delay until after animations have run
+      setTimeout(() => {
+        window.sessionStorage.setItem('firstLoadDone', 1);
+      }, 3000);
+    } else {
+      setAnimate(false);
+    }
+  }, []);
+
   return (
     <Container>
       <Grid container>
@@ -63,7 +77,13 @@ export default function Home() {
             Find and buy your next favorite wine.
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ ...styles.box, ...styles.redBox }}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          sx={{ ...styles.box, ...styles.redBox }}
+          className={animate ? 'fade-in-1' : ''}
+        >
           <OutlinedHeroLinkButton
             route='/collections/reds'
             collId={collectionIds.reds}
@@ -71,7 +91,13 @@ export default function Home() {
             Shop all reds
           </OutlinedHeroLinkButton>
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ ...styles.box, ...styles.whiteBox }}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          sx={{ ...styles.box, ...styles.whiteBox }}
+          className={animate ? 'fade-in-2' : ''}
+        >
           <OutlinedHeroLinkButton
             route='/collections/whites'
             collId={collectionIds.whites}
@@ -79,7 +105,13 @@ export default function Home() {
             Shop all whites
           </OutlinedHeroLinkButton>
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ ...styles.box, ...styles.roseBox }}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          sx={{ ...styles.box, ...styles.roseBox }}
+          className={animate ? 'fade-in-3' : ''}
+        >
           <OutlinedHeroLinkButton
             route='/collections/roses'
             collId={collectionIds.roses}

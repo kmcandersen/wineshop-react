@@ -1,3 +1,28 @@
-a {
-  text-decoration: none;
+/* hero section boxes on home page */
+
+.fade-in-1 {
+  -webkit-animation: fadeIn 1s ease-in;
+  animation: fadeIn 1s ease-in;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+}
+
+.fade-in-2 {
+  -webkit-animation: fadeIn 1s ease-in 0.5s;
+  animation: fadeIn 1s ease-in 0.5s;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+}
+
+.fade-in-3 {
+  -webkit-animation: fadeIn 1s ease-in 1s;
+  animation: fadeIn 1s ease-in 1s;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
 }
