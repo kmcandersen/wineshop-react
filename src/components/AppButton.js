@@ -11,12 +11,16 @@ export function TextButton({ children, color = 'primary' }) {
   );
 }
 
-export function FilledButton({ children, onClick }) {
+export function FilledButton({ children, onClick, width }) {
   return (
     <Button
       variant='contained'
       color='secondary'
-      sx={{ width: '250px', mt: '10px', height: '50px' }}
+      sx={{
+        mt: '10px',
+        height: '45px',
+        width: `${width === 'wide' ? '100%' : '200px'}`,
+      }}
       onClick={onClick}
     >
       {children}

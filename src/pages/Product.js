@@ -23,7 +23,7 @@ const styles = {
   },
   buttonContainer: {
     mt: '30px',
-    width: '250px',
+    width: '100%',
   },
   imageContainerXS: {
     display: 'flex',
@@ -235,11 +235,16 @@ export default function Product() {
 
             <Box sx={{ ...styles.buttonContainer }}>
               {!product.availableForSale ? (
-                <BodyTextSpecial color='mediumGrayText'>
+                <BodyTextSpecial color='maroon'>
                   This item is currently sold out.
                 </BodyTextSpecial>
               ) : (
-                <FilledButton onClick={handleSubmit}>Add to Cart</FilledButton>
+                <FilledButton
+                  onClick={handleSubmit}
+                  width={xsScreen ? 'wide' : 'regular'}
+                >
+                  Add to Cart
+                </FilledButton>
               )}
             </Box>
           </Box>
