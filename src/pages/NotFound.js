@@ -5,6 +5,8 @@ export default function NotFound() {
   const location = useLocation();
   const message = location.state ? location.state.message : null;
 
+  document.title = 'Page Not Found';
+
   return (
     <div>
       <h1>NOT FOUND</h1>

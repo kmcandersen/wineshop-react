@@ -94,6 +94,8 @@ export default function ProductList() {
     }
   };
 
+  document.title = itemsToShow && itemsToShow.title;
+
   if (!itemsToShow) {
     return <div>Loading...</div>;
   } else {

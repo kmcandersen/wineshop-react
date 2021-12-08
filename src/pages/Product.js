@@ -122,6 +122,8 @@ export default function Product() {
     addItemToCheckout(product.variants[0].id, 1);
   };
 
+  document.title = product && product.title;
+
   if (product && tagData) {
     return (
       <Container>

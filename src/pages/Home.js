@@ -69,6 +69,8 @@ export default function Home() {
     }
   }, []);
 
+  document.title = 'Welcome to wineshop';
+
   return (
     <Container>
       <Grid container>
