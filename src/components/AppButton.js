@@ -60,18 +60,21 @@ export function OutlinedEmptyCartButton() {
   );
 }
 
-export function OutlinedHeroLinkButton({
-  children,
-  color = 'secondary',
-  route,
-  collId,
-}) {
+export function OutlinedHeroLinkButton({ children, route, collId }) {
   return (
     <Link to={route} state={{ collId }} style={{ textDecoration: 'none' }}>
       <Button
         variant='outlined'
-        color={color}
-        sx={{ width: '250px', mt: '10px', height: '50px', borderWidth: '2px' }}
+        color='white'
+        sx={{
+          width: '250px',
+          height: '50px',
+          mt: '10px',
+          borderWidth: '2px',
+          backgroundColor: '#FFFFFF20',
+          fontSize: '0.95rem',
+          fontWeight: 700,
+        }}
       >
         {children}
       </Button>
