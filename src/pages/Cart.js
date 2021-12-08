@@ -3,7 +3,7 @@ import { Box, Container, Drawer, IconButton, Typography } from '@mui/material';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import ShopContext from '../context/shopContext';
 import { OutlinedButton } from '../components/AppButton';
-import { BodyTextSpecial, Subhead2 } from '../components/AppText';
+import { BodyTextSpecial, Subhead } from '../components/AppText';
 import CartEmpty from '../components/CartEmpty';
 import CartItem from '../components/CartItem';
 import customTheme from '../styles/theme.js';
@@ -55,7 +55,7 @@ export default function Cart() {
       >
         <Container sx={{ width: cartWidth }}>
           <Box sx={{ ...styles.flexRowSpaceBw }}>
-            <Subhead2 size='lg'>Your Cart</Subhead2>
+            <Subhead size='lg'>Your Cart</Subhead>
             <IconButton
               sx={{ color: customTheme.palette.mediumGray }}
               onClick={() => toggleCart(false)}
@@ -70,7 +70,7 @@ export default function Cart() {
                   <CartItem key={p.id} item={p} />
                 ))}
                 <Box sx={{ ...styles.flexRowSpaceBw }}>
-                  <Subhead2 color='gray'>Subtotal</Subhead2>
+                  <Subhead color='gray'>Subtotal</Subhead>
                   <Typography paragraph style={{ ...styles.cartSubtotal }}>
                     ${checkout.totalPrice}
                   </Typography>

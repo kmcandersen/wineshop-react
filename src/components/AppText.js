@@ -14,6 +14,7 @@ export function PageHead({ children, color = 'mediumGrayText' }) {
         fontSize: '2.2rem',
         fontWeight: 700,
         textTransform: 'lowercase',
+        mb: customTheme.spacing(1),
       }}
     >
       {children}
@@ -39,24 +40,8 @@ export function SectionHead({ headerText }) {
   );
 }
 
-export function Subhead1({ children }) {
-  return (
-    <Typography
-      component='h2'
-      sx={{
-        fontSize: '1.65rem',
-        fontWeight: 700,
-        color: customTheme.palette.black.main,
-        pt: '5px',
-      }}
-    >
-      {children}
-    </Typography>
-  );
-}
-
-// Cart: "Your Cart" & "Subtotal"
-export function Subhead2({ children, color = 'black', size = 'med' }) {
+// ProductList: results qty; Cart: "Your Cart" & "Subtotal"
+export function Subhead({ children, color = 'black', size = 'med' }) {
   const fontColor =
     color === 'gray'
       ? customTheme.palette.mediumGrayText.main

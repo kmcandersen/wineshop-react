@@ -7,7 +7,7 @@ import {
   PageHead,
   ProductListName,
   ProductListDetails,
-  Subhead1,
+  Subhead,
 } from '../components/AppText';
 import customTheme from '../styles/theme.js';
 
@@ -16,7 +16,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    paddingTop: '7px',
+    paddingTop: '4px',
   },
   listContainer: {
     marginTop: '35px',
@@ -39,7 +39,7 @@ const styles = {
     marginBottom: 0,
   },
   image: {
-    padding: '5px 15px 10px 0',
+    padding: '5px 17px 10px 0',
   },
 };
 
@@ -62,7 +62,10 @@ export default function ProductList() {
           );
           const headerColor = getHeaderColor(collection.handle);
           setItemsToShow({
-            title: `All ${collection.title}`,
+            title:
+              collection.title === 'Roses'
+                ? 'All rosés'
+                : `All ${collection.title}`,
             products: collection.products,
             headerColor: headerColor,
           });
@@ -103,7 +106,10 @@ export default function ProductList() {
     return (
       <Container>
         <PageHead color={headerColor}>{title}</PageHead>
-        <Subhead1>{itemsToShow.products.length} items</Subhead1>
+        <Subhead color='gray'>
+          {itemsToShow.products.length}
+          {itemsToShow.products.length > 1 ? ` items` : ` item`}
+        </Subhead>
         <div style={{ ...styles.listContainer }}>
           {itemsToShow.products.length ? (
             itemsToShow.products.map((p) => (
