@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Badge,
@@ -84,16 +84,13 @@ export default function Navbar() {
     >
       <Container maxWidth='lg'>
         <Toolbar sx={{ ...styles.container }}>
-          <div>
+          <Link to={`/`} style={{ textDecoration: 'none' }}>
             <Logo
-              onClick={() => {
-                navigate(`/`);
-              }}
               style={
                 xsScreen ? { ...styles.logoSmall } : { ...styles.logoRegular }
               }
             />
-          </div>
+          </Link>
           <Box sx={{ ...styles.navItemContainer }}>
             <div>
               <Button
