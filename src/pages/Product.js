@@ -19,20 +19,20 @@ import customTheme from './../styles/theme.js';
 const styles = {
   accentStripe: {
     width: '100px',
-    height: '10px',
+    height: customTheme.spacing(2),
   },
   buttonContainer: {
-    mt: '30px',
+    mt: customTheme.spacing(6),
     width: '100%',
   },
   imageContainerXS: {
     display: 'flex',
     alignItems: 'flex-start',
     width: '100%',
-    mt: '30px',
+    mt: customTheme.spacing(6),
   },
   textContent: {
-    mx: '25px',
+    mx: customTheme.spacing(5),
   },
 };
 
@@ -129,7 +129,7 @@ export default function Product() {
       <Container>
         <Box sx={{ display: 'flex' }}>
           {!xsScreen && (
-            <Box sx={{ mr: '15px' }}>
+            <Box sx={{ mr: customTheme.spacing(3) }}>
               {product.images && (
                 <img
                   src={product.images[0].src}
@@ -163,7 +163,7 @@ export default function Product() {
                 paragraph
                 sx={{
                   color: customTheme.palette.black.main,
-                  mb: '10px',
+                  mb: customTheme.spacing(2),
                   letterSpacing: '0.25px',
                 }}
               >
@@ -230,7 +230,7 @@ export default function Product() {
                   src={product.images[1].src}
                   width={110}
                   alt='bottle label'
-                  style={{ marginLeft: '30px' }}
+                  style={{ marginLeft: customTheme.spacing(6) }}
                 />
               </Box>
             )}

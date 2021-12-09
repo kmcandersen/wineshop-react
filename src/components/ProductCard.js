@@ -33,12 +33,12 @@ export default function ProductCard(props) {
       style={{ textDecoration: 'none' }}
     >
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', p: '10px' }}>
+        <Box sx={{ display: 'flex', p: customTheme.spacing(2) }}>
           <img
             src={item.images[0].src}
             height={75}
             alt='bottle'
-            style={{ paddingRight: '15px' }}
+            style={{ paddingRight: customTheme.spacing(3) }}
           />
 
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>

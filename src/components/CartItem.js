@@ -15,7 +15,7 @@ import '../styles/App.css';
 
 const styles = {
   buttonContainer: {
-    my: '10px',
+    my: customTheme.spacing(2),
     width: '250px',
   },
   flexRow: {

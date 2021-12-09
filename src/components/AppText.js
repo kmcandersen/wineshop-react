@@ -31,7 +31,7 @@ export function SectionHead({ headerText }) {
         fontSize: '1.8rem',
         letterSpacing: '0.25px',
         textAlign: 'center',
-        mb: '40px',
+        mb: customTheme.spacing(8),
         color: customTheme.palette.mediumGrayText.main,
       }}
     >
@@ -125,7 +125,7 @@ export function ProductPageName({ children }) {
         fontSize: '1.25rem',
         fontWeight: 700,
         color: customTheme.palette.black.main,
-        my: '10px',
+        my: customTheme.spacing(2),
       }}
     >
       {children}
@@ -140,7 +140,7 @@ export function ProductDescDetails({ children }) {
         paragraph
         sx={{
           color: customTheme.palette.black.main,
-          mb: '10px',
+          mb: customTheme.spacing(2),
           letterSpacing: '0.25px',
         }}
       >

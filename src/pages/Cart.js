@@ -34,7 +34,7 @@ const styles = {
     alignItems: 'flex-end',
   },
   listContainer: {
-    marginTop: '35px',
+    marginTop: customTheme.spacing(7),
   },
   lineItemRow: {
     display: 'flex',
@@ -84,7 +84,7 @@ export default function Cart() {
           }}
         >
           <Box sx={{ ...styles.flexRowSpaceBw }}>
-            <Box sx={{ pl: '10px' }}>
+            <Box sx={{ pl: customTheme.spacing(2) }}>
               <Subhead size='lg'>Your Cart</Subhead>
             </Box>
             <IconButton

@@ -19,13 +19,13 @@ const styles = {
     paddingTop: '4px',
   },
   listContainer: {
-    marginTop: '35px',
+    marginTop: customTheme.spacing(7),
   },
   listItem: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    paddingTop: '15px',
+    paddingTop: customTheme.spacing(3),
     borderBottom: `1px solid ${customTheme.palette.lightGray.main}`,
   },
   textContainer: {

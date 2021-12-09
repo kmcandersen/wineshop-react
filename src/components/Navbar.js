@@ -104,7 +104,7 @@ export default function Navbar() {
                 onClick={handleClick}
               >
                 Browse{' '}
-                <span style={{ paddingTop: '5px' }}>
+                <span style={{ paddingTop: customTheme.spacing(1) }}>
                   {open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                 </span>
               </Button>
@@ -161,7 +161,15 @@ export default function Navbar() {
             <IconButton
               aria-label={!isCartOpen && 'Open Cart'}
               onClick={() => toggleCart(true)}
-              sx={{ ml: `${xsScreen ? '5px' : smScreen ? '20px' : '40px'}` }}
+              sx={{
+                ml: `${
+                  xsScreen
+                    ? customTheme.spacing(1)
+                    : smScreen
+                    ? customTheme.spacing(4)
+                    : customTheme.spacing(8)
+                }`,
+              }}
             >
               <Badge badgeContent={badgeQty} color='secondary'>
                 <ShoppingCartIcon

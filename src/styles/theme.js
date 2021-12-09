@@ -24,7 +24,7 @@ const customTheme = createTheme({
     black: { main: '#1E1E1E' },
     white: { main: '#fff' },
   },
-  spacing: [0, 5, 10, 15, 20, 25, 30, 35, 40],
+  spacing: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
   typography: {
     fontFamily: '"Lato", "Helvetica", "Arial", sans-serif',
   },

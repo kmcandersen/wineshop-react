@@ -33,7 +33,7 @@ const styles = {
     fontFamily: 'Playfair Display',
     textAlign: 'center',
     fontSize: '2rem',
-    p: '15px',
+    p: customTheme.spacing(3),
   },
 };
 

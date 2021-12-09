@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import ShopContext from '../context/shopContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import customTheme from '../styles/theme';
 
 export function TextButton({ children, color = 'primary' }) {
   return (
@@ -17,7 +18,7 @@ export function FilledButton({ children, onClick, width }) {
       variant='contained'
       color='secondary'
       sx={{
-        mt: '10px',
+        mt: customTheme.spacing(2),
         height: '45px',
         width: `${width === 'wide' ? '100%' : '200px'}`,
       }}
@@ -39,7 +40,12 @@ export function OutlinedEmptyCartButton() {
       <Button
         variant='outlined'
         color='secondary'
-        sx={{ width: '250px', mt: '10px', height: '50px', borderWidth: '2px' }}
+        sx={{
+          width: '250px',
+          height: '50px',
+          mt: customTheme.spacing(2),
+          borderWidth: '2px',
+        }}
       >
         Start Shopping
       </Button>
@@ -56,7 +62,7 @@ export function OutlinedHeroLinkButton({ children, route, collId }) {
         sx={{
           width: '250px',
           height: '50px',
-          mt: '10px',
+          mt: customTheme.spacing(2),
           borderWidth: '2px',
           backgroundColor: '#FFFFFF20',
           fontSize: '0.95rem',
