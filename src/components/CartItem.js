@@ -1,21 +1,21 @@
 import React, { useContext } from 'react';
 import {
   Box,
+  Button,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
   Typography,
 } from '@mui/material';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ShopContext from '../context/shopContext';
-import { BodyTextSpecial, CartListName } from '../components/AppText';
+import { CartListName } from '../components/AppText';
 import customTheme from '../styles/theme.js';
+import '../styles/App.css';
 
 const styles = {
   buttonContainer: {
-    my: '30px',
+    my: '10px',
     width: '250px',
   },
   flexRow: {
@@ -35,6 +35,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     borderBottom: `1px solid ${customTheme.palette.lightGray.main}`,
+    p: customTheme.spacing(2),
+    pl: customTheme.spacing(3),
   },
   lineItemTotal: {
     fontWeight: 700,
@@ -80,7 +82,7 @@ export default function CartItem({ item }) {
             <Typography paragraph>
               ${item.variant.price * 1} ea x {item.quantity}
             </Typography>
-            <Typography paragraph sx={{ ...styles.lineItemTotal }}>
+            <Typography paragraph sx={{ ...styles.lineItemTotal, pr: '8px' }}>
               ${item.quantity * item.variant.price}.00
             </Typography>
           </Box>
@@ -94,6 +96,7 @@ export default function CartItem({ item }) {
                   name='quantity'
                   label='Quantity'
                   onChange={(e) => updateCheckoutItem(item.id, e.target.value)}
+                  sx={{ height: '45px', width: '80px' }}
                 >
                   {[...Array(itemInventory).keys()].map((n) => (
                     <MenuItem key={n + 1} value={n + 1}>
@@ -102,19 +105,29 @@ export default function CartItem({ item }) {
                   ))}
                 </Select>
               </FormControl>
-              {item.quantity === itemInventory && (
-                <BodyTextSpecial color='mediumGrayText'>
-                  Maximum quantity reached
-                </BodyTextSpecial>
-              )}
             </Box>
-            <IconButton
+            <Button
+              variant='text'
               sx={{ color: customTheme.palette.mediumGray }}
               onClick={() => removeLineItem(item.id, item.variant.id)}
             >
-              <CancelOutlinedIcon />
-            </IconButton>
+              REMOVE
+            </Button>
           </Box>
+
+          {item.quantity === itemInventory && (
+            <Typography
+              paragraph
+              sx={{
+                color: customTheme.palette.error.main,
+                fontStyle: 'italic',
+                mt: customTheme.spacing(1),
+                mb: customTheme.spacing(2),
+              }}
+            >
+              Maximum quantity reached
+            </Typography>
+          )}
         </Box>
       </Box>
     );

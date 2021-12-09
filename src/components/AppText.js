@@ -157,7 +157,7 @@ export function BodyTextSpecial({ children, color = 'black' }) {
       sx={{
         color: customTheme.palette[color].main,
         fontStyle: 'italic',
-        mt: '20px',
+        mt: customTheme.spacing(3),
       }}
     >
       {children}
@@ -177,9 +177,12 @@ export function CartListName({ children, handle, title }) {
       <Typography
         component='h4'
         sx={{
+          lineHeight: '1.4rem',
           color: customTheme.palette.black.main,
           fontSize: '1.1rem',
           fontWeight: 700,
+          mt: customTheme.spacing(2),
+          mb: customTheme.spacing(1),
         }}
       >
         {children}

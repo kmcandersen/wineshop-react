@@ -8,6 +8,9 @@ const customTheme = createTheme({
     secondary: {
       main: '#B71010', // maroon
     },
+    error: {
+      main: '#B71010', // maroon
+    },
     maroon: { main: '#B40808' }, // passes AAA normal text
     darkMaroon: { main: '#9D1D20' },
     gold: { main: '#D9A92A' },
@@ -21,7 +24,7 @@ const customTheme = createTheme({
     black: { main: '#1E1E1E' },
     white: { main: '#fff' },
   },
-  spacing: [0, 5, 10, 15, 20, 25],
+  spacing: [0, 5, 10, 15, 20, 25, 30, 35, 40],
   typography: {
     fontFamily: '"Lato", "Helvetica", "Arial", sans-serif',
   },

@@ -28,19 +28,6 @@ export function FilledButton({ children, onClick, width }) {
   );
 }
 
-export function OutlinedButton({ children, onClick }) {
-  return (
-    <Button
-      variant='outlined'
-      color='secondary'
-      sx={{ width: '250px', mt: '10px', height: '50px', borderWidth: '2px' }}
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  );
-}
-
 export function OutlinedEmptyCartButton() {
   const { toggleCart } = useContext(ShopContext);
   return (
