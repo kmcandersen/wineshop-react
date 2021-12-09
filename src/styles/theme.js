@@ -1,7 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 
+const uiBlack = '#1E1E1E';
+
 const customTheme = createTheme({
   palette: {
+    common: {
+      black: uiBlack,
+    },
     primary: {
       main: '#525252', // darkGrayText
     },
@@ -18,10 +23,10 @@ const customTheme = createTheme({
     pink: { main: '#EA9999' },
     darkPink: { main: '#C47E7E' }, // passes AA large text
     darkGrayText: { main: '#525252' },
-    mediumGray: { main: '#6B6B6B' },
     mediumGrayText: { main: '#6B6B6B' }, // passes AA large text
     lightGray: { main: '#DBDBDB' },
-    black: { main: '#1E1E1E' },
+    // for dynamic color prop names
+    black: { main: uiBlack },
     white: { main: '#fff' },
   },
   spacing: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50],

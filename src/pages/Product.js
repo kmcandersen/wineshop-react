@@ -237,7 +237,7 @@ export default function Product() {
 
             <Box sx={{ ...styles.buttonContainer }}>
               {!product.availableForSale ? (
-                <BodyTextSpecial color='maroon'>
+                <BodyTextSpecial color='error'>
                   This item is currently sold out.
                 </BodyTextSpecial>
               ) : (
