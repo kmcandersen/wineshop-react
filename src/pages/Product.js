@@ -158,7 +158,7 @@ export default function Product() {
             />
 
             <ProductPageName>{product.title}</ProductPageName>
-            <div style={{ flex: 1 }}>
+            <Box sx={{ flex: 1 }}>
               <Typography
                 paragraph
                 sx={{
@@ -179,7 +179,7 @@ export default function Product() {
                   svg
                 />
               </Typography>
-            </div>
+            </Box>
 
             <ProductDescDetails>WINERY: {product.vendor}</ProductDescDetails>
             <ProductDescDetails>

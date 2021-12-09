@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import client from '../config/initClient.js';
 import ShopContext from '../context/shopContext';
 import {
@@ -110,12 +110,12 @@ export default function ProductList() {
           {itemsToShow.products.length}
           {itemsToShow.products.length > 1 ? ` items` : ` item`}
         </Subhead>
-        <div style={{ ...styles.listContainer }}>
+        <Box sx={{ ...styles.listContainer }}>
           {itemsToShow.products.length ? (
             itemsToShow.products.map((p) => (
-              <div
+              <Box
                 key={p.id}
-                style={{
+                sx={{
                   ...styles.listItem,
                 }}
               >
@@ -125,23 +125,23 @@ export default function ProductList() {
                   height={55}
                   style={{ ...styles.image }}
                 />
-                <div style={{ ...styles.textContainer }}>
+                <Box style={{ ...styles.textContainer }}>
                   <ProductListName handle={p.handle} title={p.title}>
                     {p.title}
                   </ProductListName>
-                  <div style={{ ...styles.detailsRow }}>
+                  <Box style={{ ...styles.detailsRow }}>
                     <ProductListDetails>{p.productType}</ProductListDetails>
                     <Typography paragraph style={{ ...styles.price }}>
                       ${p.variants[0].price}
                     </Typography>
-                  </div>
-                </div>
-              </div>
+                  </Box>
+                </Box>
+              </Box>
             ))
           ) : (
             <h1>NO RESULTS</h1>
           )}
-        </div>
+        </Box>
       </Container>
     );
   }

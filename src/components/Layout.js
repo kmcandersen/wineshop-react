@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Cart from '../pages/Cart';
 import Navbar from './Navbar';
 
@@ -19,12 +19,12 @@ const styles = {
 
 export default function Layout(props) {
   return (
-    <div style={{ ...styles.appContainer }}>
+    <Box sx={{ ...styles.appContainer }}>
       <Navbar />
       <Cart />
       <Container maxWidth='md' sx={{ ...styles.container }}>
         {props.children}
       </Container>
-    </div>
+    </Box>
   );
 }

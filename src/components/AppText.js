@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import customTheme from './../styles/theme.js';
 import ShopContext from '../context/shopContext';
 
@@ -103,7 +103,7 @@ export function ProductListName({ children, handle, title }) {
 
 export function ProductListDetails({ children }) {
   return (
-    <div style={{ flex: 1 }}>
+    <Box sx={{ flex: 1 }}>
       <Typography
         paragraph
         sx={{
@@ -113,7 +113,7 @@ export function ProductListDetails({ children }) {
       >
         {children}
       </Typography>
-    </div>
+    </Box>
   );
 }
 
@@ -135,7 +135,7 @@ export function ProductPageName({ children }) {
 
 export function ProductDescDetails({ children }) {
   return (
-    <div style={{ flex: 1 }}>
+    <Box sx={{ flex: 1 }}>
       <Typography
         paragraph
         sx={{
@@ -146,7 +146,7 @@ export function ProductDescDetails({ children }) {
       >
         {children}
       </Typography>
-    </div>
+    </Box>
   );
 }
 
