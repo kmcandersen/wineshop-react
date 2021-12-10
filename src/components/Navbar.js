@@ -83,7 +83,7 @@ export default function Navbar() {
       sx={{ height: '9vh', backgroundColor: customTheme.palette.white.main }}
     >
       <Container maxWidth='lg'>
-        <Toolbar sx={{ ...styles.container }}>
+        <Toolbar sx={styles.container}>
           <Link to={`/`} style={{ textDecoration: 'none' }}>
             <Logo
               style={
@@ -91,7 +91,7 @@ export default function Navbar() {
               }
             />
           </Link>
-          <Box sx={{ ...styles.navItemContainer }}>
+          <Box sx={styles.navItemContainer}>
             <div>
               <Button
                 id='basic-button'

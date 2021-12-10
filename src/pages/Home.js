@@ -74,8 +74,8 @@ export default function Home() {
   return (
     <Container>
       <Grid container>
-        <Grid item xs={12} sm={6} sx={{ ...styles.box }}>
-          <Typography component='h1' sx={{ ...styles.sloganText }}>
+        <Grid item xs={12} sm={6} sx={styles.box}>
+          <Typography component='h1' sx={styles.sloganText}>
             Find and buy your next favorite wine.
           </Typography>
         </Grid>

@@ -63,22 +63,18 @@ export default function CartItem({ item }) {
 
   if (itemInventory) {
     return (
-      <Box
-        sx={{
-          ...styles.lineItemContainer,
-        }}
-      >
+      <Box sx={styles.lineItemContainer}>
         <img
           src={item.variant.image.src}
           alt='bottle'
           height={60}
           style={{ ...styles.image }}
         />
-        <Box sx={{ ...styles.textContainer }}>
+        <Box sx={styles.textContainer}>
           <CartListName handle={item.variant.product.handle} title={item.title}>
             {item.title}
           </CartListName>
-          <Box sx={{ ...styles.flexRowSpaceBw }}>
+          <Box sx={styles.flexRowSpaceBw}>
             <Typography paragraph>
               ${item.variant.price * 1} ea x {item.quantity}
             </Typography>
@@ -87,8 +83,8 @@ export default function CartItem({ item }) {
             </Typography>
           </Box>
 
-          <Box sx={{ ...styles.flexRowSpaceBw }}>
-            <Box sx={{ ...styles.buttonContainer }}>
+          <Box sx={styles.flexRowSpaceBw}>
+            <Box sx={styles.buttonContainer}>
               <FormControl fullWidth>
                 <InputLabel>Quantity</InputLabel>
                 <Select

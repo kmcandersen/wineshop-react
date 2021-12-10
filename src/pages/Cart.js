@@ -83,7 +83,7 @@ export default function Cart() {
             p: customTheme.spacing(3),
           }}
         >
-          <Box sx={{ ...styles.flexRowSpaceBw }}>
+          <Box sx={styles.flexRowSpaceBw}>
             <Box sx={{ pl: customTheme.spacing(2) }}>
               <Subhead size='lg'>Your Cart</Subhead>
             </Box>
@@ -95,24 +95,24 @@ export default function Cart() {
               <CloseOutlinedIcon />
             </IconButton>
           </Box>
-          <Box sx={{ ...styles.listContainer }}>
+          <Box sx={styles.listContainer}>
             {checkout.lineItems.length ? (
               <Box>
                 {checkout.lineItems.map((p) => (
                   <CartItem key={p.id} item={p} />
                 ))}
                 <Box sx={{ p: customTheme.spacing(2) }}>
-                  <Box sx={{ ...styles.flexRowSpaceBw }}>
+                  <Box sx={styles.flexRowSpaceBw}>
                     <Subhead color='gray'>Subtotal</Subhead>
-                    <Typography paragraph style={{ ...styles.cartSubtotal }}>
+                    <Typography paragraph style={styles.cartSubtotal}>
                       ${checkout.totalPrice}
                     </Typography>
                   </Box>
-                  <Box sx={{ ...styles.flexColumnRight }}>
+                  <Box sx={styles.flexColumnRight}>
                     <BodyTextSpecial>
                       Tax and shipping will be calculated during checkout
                     </BodyTextSpecial>
-                    <Box sx={{ ...styles.buttonContainer }}>
+                    <Box sx={styles.buttonContainer}>
                       <FilledButton onClick={handleCheckout}>
                         Checkout
                       </FilledButton>

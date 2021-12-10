@@ -149,7 +149,7 @@ export default function Product() {
             </Box>
           )}
 
-          <Box sx={{ ...styles.textContent }}>
+          <Box sx={styles.textContent}>
             <div
               style={{
                 ...styles.accentStripe,
@@ -218,11 +218,7 @@ export default function Product() {
               ))}
             </Box>
             {xsScreen && (
-              <Box
-                sx={{
-                  ...styles.imageContainerXS,
-                }}
-              >
+              <Box sx={styles.imageContainerXS}>
                 {product.images && (
                   <img src={product.images[0].src} height={320} alt='bottle' />
                 )}
@@ -235,7 +231,7 @@ export default function Product() {
               </Box>
             )}
 
-            <Box sx={{ ...styles.buttonContainer }}>
+            <Box sx={styles.buttonContainer}>
               {!product.availableForSale ? (
                 <BodyTextSpecial color='error'>
                   This item is currently sold out.

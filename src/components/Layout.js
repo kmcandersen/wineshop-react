@@ -19,10 +19,10 @@ const styles = {
 
 export default function Layout(props) {
   return (
-    <Box sx={{ ...styles.appContainer }}>
+    <Box sx={styles.appContainer}>
       <Navbar />
       <Cart />
-      <Container maxWidth='md' sx={{ ...styles.container }}>
+      <Container maxWidth='md' sx={styles.container}>
         {props.children}
       </Container>
     </Box>

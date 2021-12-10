@@ -110,28 +110,23 @@ export default function ProductList() {
           {itemsToShow.products.length}
           {itemsToShow.products.length > 1 ? ` items` : ` item`}
         </Subhead>
-        <Box sx={{ ...styles.listContainer }}>
+        <Box sx={styles.listContainer}>
           {itemsToShow.products.length ? (
             itemsToShow.products.map((p) => (
-              <Box
-                key={p.id}
-                sx={{
-                  ...styles.listItem,
-                }}
-              >
+              <Box key={p.id} sx={styles.listItem}>
                 <img
                   src={p.images[0].src}
                   alt='bottle'
                   height={55}
                   style={{ ...styles.image }}
                 />
-                <Box style={{ ...styles.textContainer }}>
+                <Box style={styles.textContainer}>
                   <ProductListName handle={p.handle} title={p.title}>
                     {p.title}
                   </ProductListName>
-                  <Box style={{ ...styles.detailsRow }}>
+                  <Box style={styles.detailsRow}>
                     <ProductListDetails>{p.productType}</ProductListDetails>
-                    <Typography paragraph style={{ ...styles.price }}>
+                    <Typography paragraph sx={styles.price}>
                       ${p.variants[0].price}
                     </Typography>
                   </Box>

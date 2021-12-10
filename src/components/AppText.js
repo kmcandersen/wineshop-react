@@ -64,7 +64,6 @@ export function Subhead({ children, color = 'black', size = 'med' }) {
 export function ProductCardName({ children }) {
   return (
     <Typography
-      // variant='body1'
       component='h3'
       sx={{
         color: customTheme.palette.black.main,
