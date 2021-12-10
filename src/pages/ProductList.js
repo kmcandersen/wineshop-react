@@ -3,12 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Container, Typography } from '@mui/material';
 import client from '../config/initClient.js';
 import ShopContext from '../context/shopContext';
+import { OutlinedGoHomeButton } from '../components/AppButton';
 import {
   PageHead,
   ProductListName,
   ProductListDetails,
   Subhead,
 } from '../components/AppText';
+import LoadingSpinner from '../components/LoadingSpinner';
 import customTheme from '../styles/theme.js';
 
 const styles = {
@@ -99,8 +101,10 @@ export default function ProductList() {
 
   document.title = itemsToShow && itemsToShow.title;
 
+  const containerHeight = window.innerHeight - 65 * 2;
+
   if (!itemsToShow) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner containerHeight={containerHeight} />;
   } else {
     const { title, headerColor } = itemsToShow;
     return (
@@ -108,7 +112,7 @@ export default function ProductList() {
         <PageHead color={headerColor}>{title}</PageHead>
         <Subhead color='gray'>
           {itemsToShow.products.length}
-          {itemsToShow.products.length > 1 ? ` items` : ` item`}
+          {itemsToShow.products.length === 1 ? ` item` : ` items`}
         </Subhead>
         <Box sx={styles.listContainer}>
           {itemsToShow.products.length ? (
@@ -134,7 +138,7 @@ export default function ProductList() {
               </Box>
             ))
           ) : (
-            <h1>NO RESULTS</h1>
+            <OutlinedGoHomeButton />
           )}
         </Box>
       </Container>

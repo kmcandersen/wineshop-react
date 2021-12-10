@@ -80,7 +80,7 @@ export default function Navbar() {
   return (
     <AppBar
       position='fixed'
-      sx={{ height: '9vh', backgroundColor: customTheme.palette.white.main }}
+      sx={{ height: '65px', backgroundColor: customTheme.palette.white.main }}
     >
       <Container maxWidth='lg'>
         <Toolbar sx={styles.container}>

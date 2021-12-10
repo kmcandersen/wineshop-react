@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
 
+import LoadingSpinner from '../components/LoadingSpinner';
 import ProductCard from './ProductCard';
 import { SectionHead } from './AppText';
 
@@ -21,6 +22,6 @@ export default function ProductCardGroup({ items, color, headerText }) {
       </Box>
     );
   } else {
-    return null;
+    return <LoadingSpinner containerHeight={220} />;
   }
 }

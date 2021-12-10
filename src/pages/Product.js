@@ -12,6 +12,7 @@ import {
   ProductPageName,
 } from './../components/AppText';
 import { FilledButton } from './../components/AppButton';
+import LoadingSpinner from '../components/LoadingSpinner';
 import ProductCardGroup from '../components/ProductCardGroup';
 import collectionIds from '../config/collectionIds.js';
 import customTheme from './../styles/theme.js';
@@ -123,6 +124,8 @@ export default function Product() {
   };
 
   document.title = product && product.title;
+
+  const containerHeight = window.innerHeight - 65 * 2;
 
   if (product && tagData) {
     return (
@@ -269,6 +272,6 @@ export default function Product() {
       </Container>
     );
   } else {
-    return <div>Loading...</div>;
+    return <LoadingSpinner containerHeight={containerHeight} />;
   }
 }

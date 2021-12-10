@@ -53,6 +53,25 @@ export function OutlinedEmptyCartButton() {
   );
 }
 
+export function OutlinedGoHomeButton() {
+  return (
+    <Link to={`/`} style={{ textDecoration: 'none' }}>
+      <Button
+        variant='outlined'
+        color='secondary'
+        sx={{
+          width: '250px',
+          height: '50px',
+          mt: customTheme.spacing(2),
+          borderWidth: '2px',
+        }}
+      >
+        Go Home
+      </Button>
+    </Link>
+  );
+}
+
 export function OutlinedHeroLinkButton({ children, route, collId }) {
   return (
     <Link to={route} state={{ collId }} style={{ textDecoration: 'none' }}>
