@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Container, Typography } from '@mui/material';
 import client from '../config/initClient.js';
 import ShopContext from '../context/shopContext';
+import collectionIds from '../config/collectionIds.js';
 import { OutlinedGoHomeButton } from '../components/AppButton';
 import {
   PageHead,
@@ -55,35 +56,59 @@ export default function ProductList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if '/collections'
-    if (collId) {
-      const fetchCollection = async (collectionId) => {
-        try {
-          const collection = await client.collection.fetchWithProducts(
-            collectionId
-          );
-          const headerColor = getHeaderColor(collection.handle);
-          setItemsToShow({
-            title:
-              collection.title === 'Roses'
-                ? 'All rosés'
-                : `All ${collection.title}`,
-            products: collection.products,
-            headerColor: headerColor,
+    const fetchCollection = async (collectionId) => {
+      try {
+        const collection = await client.collection.fetchWithProducts(
+          collectionId
+        );
+        const headerColor = getHeaderColor(collection.handle);
+        setItemsToShow({
+          title:
+            collection.title === 'Roses'
+              ? 'All rosés'
+              : `All ${collection.title}`,
+          products: collection.products,
+          headerColor: headerColor,
+        });
+      } catch (error) {
+        console.log('error: ', error);
+        navigate('/not-found', { state: { message: 'failed request' } });
+      }
+    };
+    if (location.pathname.split('/')[1] === 'collections') {
+      // for '/collections' accessed via buttons, incl state
+      if (collId) {
+        fetchCollection(collId);
+      } else {
+        // for manually entered '/collections' urls: valid, but n/incl state
+        // try to match last path segment with a key in collectionIds
+        // match ? get id & fetch : navigate to not-found
+        const getCollId = (collName) => {
+          for (const key in collectionIds) {
+            if (key === collName) {
+              return collectionIds[key];
+            }
+          }
+        };
+        const collName = location.pathname.split('/')[2];
+        const foundCollId = getCollId(collName);
+        if (foundCollId) {
+          fetchCollection(foundCollId);
+        } else {
+          navigate('/not-found', {
+            state: { message: 'not a valid collection name' },
           });
-        } catch (error) {
-          console.log('error: ', error);
-          navigate('/not-found', { state: { message: 'failed request' } });
         }
-      };
-      fetchCollection(collId);
-    } else {
-      // if '/products'
+      }
+    } else if (location.pathname === '/products') {
       setItemsToShow({
         title: `All products`,
         products: products,
         headerColor: 'mediumGrayText',
       });
+    } else {
+      console.log(location.pathname);
+      navigate('/not-found', { state: { message: 'failed request' } });
     }
   }, [collId, location, navigate, products]);
 
