@@ -10,10 +10,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    textAlign: 'left',
   },
   container: {
-    textAlign: 'left',
+    display: 'flex',
+    flexDirection: 'column',
   },
 };
 

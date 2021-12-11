@@ -10,8 +10,8 @@ import {
   Menu,
   MenuItem,
   Toolbar,
+  useMediaQuery,
 } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -40,7 +40,6 @@ const styles = {
   },
   navItemContainer: {
     display: 'flex',
-    flexContainer: 'row',
     justifyContent: 'center',
   },
 };
