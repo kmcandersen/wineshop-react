@@ -100,7 +100,7 @@ export default function Home() {
           sx={{
             ...styles.box,
             ...styles.redBox,
-            height: '250px',
+            height: `${smScreen ? '200px' : '250px'}`,
           }}
           className={animate ? 'fade-in-1' : ''}
         >
@@ -115,7 +115,11 @@ export default function Home() {
           item
           xs={12}
           sm={6}
-          sx={{ ...styles.box, ...styles.whiteBox, height: '250px' }}
+          sx={{
+            ...styles.box,
+            ...styles.whiteBox,
+            height: `${smScreen ? '200px' : '250px'}`,
+          }}
           className={animate ? 'fade-in-2' : ''}
         >
           <OutlinedHeroLinkButton
@@ -129,7 +133,11 @@ export default function Home() {
           item
           xs={12}
           sm={6}
-          sx={{ ...styles.box, ...styles.roseBox, height: '250px' }}
+          sx={{
+            ...styles.box,
+            ...styles.roseBox,
+            height: `${smScreen ? '200px' : '250px'}`,
+          }}
           className={animate ? 'fade-in-3' : ''}
         >
           <OutlinedHeroLinkButton
