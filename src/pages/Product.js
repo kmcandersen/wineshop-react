@@ -51,6 +51,7 @@ export default function Product() {
   const xsScreen = useMediaQuery('(max-width:444px)');
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     // fetch current product & set state; parse current product.tags & set state; fetch items in product's matching color collection; remove current product from collection.products--remainder are the related items--& set state
     const fetchProductInfo = async (title) => {
       try {

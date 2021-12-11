@@ -56,6 +56,7 @@ export default function ProductList() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchCollection = async (collectionId) => {
       try {
         const collection = await client.collection.fetchWithProducts(
