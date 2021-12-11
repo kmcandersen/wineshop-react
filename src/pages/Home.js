@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Grid, Typography } from '@mui/material';
+import {
+  Container,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import '../styles/App.css';
 import client from '../config/initClient.js';
 import collectionIds from '../config/collectionIds.js';
 import customTheme from './../styles/theme.js';
-import { OutlinedHeroLinkButton } from '../components/AppButton';
-import ProductCardGroup from '../components/ProductCardGroup';
 import grapesPhoto from '../assets/grapes-on-table.jpg';
 import bottlesPhoto from '../assets/bottles-on-shelf.jpg';
 import glassesPhoto from '../assets/wine-glasses.jpg';
-import '../styles/App.css';
+import { OutlinedHeroLinkButton } from '../components/AppButton';
+import ProductCardGroup from '../components/ProductCardGroup';
 
 const styles = {
   box: {
@@ -17,7 +23,6 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '250px',
   },
   redBox: {
     backgroundImage: `linear-gradient(rgba(150, 12, 12, 0.75), rgba(150, 12, 12, 0.75)), url(${grapesPhoto})`,
@@ -41,6 +46,9 @@ export default function Home() {
   const [collection, setCollection] = useState({});
   const [animate, setAnimate] = useState(true);
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,7 +83,12 @@ export default function Home() {
   return (
     <Container>
       <Grid container>
-        <Grid item xs={12} sm={6} sx={styles.box}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          sx={{ ...styles.box, pb: `${smScreen ? customTheme.spacing(6) : 0}` }}
+        >
           <Typography component='h1' sx={styles.sloganText}>
             Find and buy your next favorite wine.
           </Typography>
@@ -84,7 +97,11 @@ export default function Home() {
           item
           xs={12}
           sm={6}
-          sx={{ ...styles.box, ...styles.redBox }}
+          sx={{
+            ...styles.box,
+            ...styles.redBox,
+            height: '250px',
+          }}
           className={animate ? 'fade-in-1' : ''}
         >
           <OutlinedHeroLinkButton
@@ -98,7 +115,7 @@ export default function Home() {
           item
           xs={12}
           sm={6}
-          sx={{ ...styles.box, ...styles.whiteBox }}
+          sx={{ ...styles.box, ...styles.whiteBox, height: '250px' }}
           className={animate ? 'fade-in-2' : ''}
         >
           <OutlinedHeroLinkButton
@@ -112,7 +129,7 @@ export default function Home() {
           item
           xs={12}
           sm={6}
-          sx={{ ...styles.box, ...styles.roseBox }}
+          sx={{ ...styles.box, ...styles.roseBox, height: '250px' }}
           className={animate ? 'fade-in-3' : ''}
         >
           <OutlinedHeroLinkButton
