@@ -8,10 +8,10 @@
 ### Screenshots
 
 <p>
-<img src="https://kristenandersen.online/assets/screenshots/wineshop-home.png" alt="home screen" width="50%" style="padding: 10px;"/>
-<img src="https://kristenandersen.online/assets/screenshots/wineshop-product-list.png" alt="list screen" width="50%"style="padding: 10px;"/>
+<img src="https://kristenandersen.online/assets/screenshots/wineshop-home.png" alt="home screen" width="45%" style="padding: 10px;"/>
+<img src="https://kristenandersen.online/assets/screenshots/wineshop-product-list.png" alt="list screen" width="45%"style="padding: 10px;"/>
 </p>
 <p>
-<img src="https://kristenandersen.online/assets/screenshots/wineshop-product.png" alt="product screen" width="50%" style="padding: 10px;"/>
-<img src="https://kristenandersen.online/assets/screenshots/wineshop-cart.png" alt="cart screen" width="50%" style="padding: 10px;"/>
+<img src="https://kristenandersen.online/assets/screenshots/wineshop-product.png" alt="product screen" width="45%" style="padding: 10px;"/>
+<img src="https://kristenandersen.online/assets/screenshots/wineshop-cart.png" alt="cart screen" width="45%" style="padding: 10px;"/>
 </p>
