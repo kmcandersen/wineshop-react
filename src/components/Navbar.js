@@ -83,11 +83,16 @@ export default function Navbar() {
     >
       <Container maxWidth='lg'>
         <Toolbar sx={styles.container}>
-          <Link to={`/`} style={{ textDecoration: 'none' }}>
+          <Link
+            to={`/`}
+            aria-label='go to homepage'
+            style={{ textDecoration: 'none' }}
+          >
             <Logo
               style={
                 xsScreen ? { ...styles.logoSmall } : { ...styles.logoRegular }
               }
+              alt='logo'
             />
           </Link>
           <Box sx={styles.navItemContainer}>
