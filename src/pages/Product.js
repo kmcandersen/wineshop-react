@@ -14,6 +14,7 @@ import {
 import { FilledButton } from './../components/AppButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ProductCardGroup from '../components/ProductCardGroup';
+import RegionMap from '../components/RegionMap';
 import collectionIds from '../config/collectionIds.js';
 import customTheme from './../styles/theme.js';
 
@@ -259,6 +260,7 @@ export default function Product() {
                 style={{ margin: '10px 0' }}
               />
             )}
+            <RegionMap />
           </Box>
         </Box>
         <Box>

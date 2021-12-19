@@ -5,6 +5,7 @@ import { ShopProvider } from './context/shopContext';
 import { ThemeProvider } from '@mui/material/styles';
 import customTheme from './styles/theme.js';
 import App from './App';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import './index.css';
 
 ReactDOM.render(
