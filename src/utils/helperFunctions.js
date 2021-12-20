@@ -1,7 +1,10 @@
+import wineRegions from '../assets/wine-regions.js';
+
 // Product
 export const getTagData = (tagsArr) => {
   let result = {
     color: '',
+    coords: [],
     stripeColor: '',
     country: '',
     countrycode: '',
@@ -21,6 +24,9 @@ export const getTagData = (tagsArr) => {
   }
   result.stripeColor = getStripeColor(result.color);
   result.ratingText = getScoreText(result.rating);
+  if (result.region !== 'na') {
+    result.coords = getCoords(result.region);
+  }
   return result;
 };
 
@@ -54,5 +60,14 @@ export const getScoreText = (rating) => {
     return 'Acceptable';
   } else {
     return '';
+  }
+};
+
+// Product (as part of getTagData)
+export const getCoords = (region) => {
+  for (const obj of wineRegions) {
+    if (obj.region === region) {
+      return obj.coords;
+    }
   }
 };

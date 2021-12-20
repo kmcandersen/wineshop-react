@@ -27,11 +27,17 @@ const styles = {
     mt: customTheme.spacing(6),
     width: '100%',
   },
-  imageContainerXS: {
+  imagesContainerXS: {
     display: 'flex',
     alignItems: 'flex-start',
     width: '100%',
     mt: customTheme.spacing(6),
+  },
+  labelMapBR: '3px',
+  labelMapColumnXS: {
+    flexDirection: 'column',
+    ml: customTheme.spacing(6),
+    width: '100px',
   },
   textContent: {
     mx: customTheme.spacing(5),
@@ -135,21 +141,34 @@ export default function Product() {
         <Box sx={{ display: 'flex' }}>
           {!xsScreen && (
             <Box sx={{ mr: customTheme.spacing(3) }}>
-              {product.images && (
-                <img
-                  src={product.images[0].src}
-                  height={320}
-                  alt='bottle'
-                  style={{ margin: '10px 0' }}
-                />
-              )}
-              {smScreen && product.images && (
-                <img
-                  src={product.images[1].src}
-                  width={'95%'}
-                  alt='bottle label'
-                  style={{ margin: '10px 0' }}
-                />
+              <img
+                src={product.images[0].src}
+                height={320}
+                alt='bottle'
+                style={{ margin: '10px 0' }}
+              />
+              {smScreen && (
+                <Box>
+                  <img
+                    src={product.images[1].src}
+                    width={'85px'}
+                    alt='bottle label'
+                    style={{
+                      margin: '10px 0',
+                      borderRadius: styles.labelMapBR,
+                    }}
+                  />
+                  {tagData.coords[0] && (
+                    <RegionMap
+                      coords={tagData.coords}
+                      style={{
+                        width: '85px',
+                        height: '100px',
+                        borderRadius: styles.labelMapBR,
+                      }}
+                    />
+                  )}
+                </Box>
               )}
             </Box>
           )}
@@ -223,16 +242,29 @@ export default function Product() {
               ))}
             </Box>
             {xsScreen && (
-              <Box sx={styles.imageContainerXS}>
-                {product.images && (
-                  <img src={product.images[0].src} height={320} alt='bottle' />
-                )}
-                <img
-                  src={product.images[1].src}
-                  width={110}
-                  alt='bottle label'
-                  style={{ marginLeft: customTheme.spacing(6) }}
-                />
+              <Box sx={styles.imagesContainerXS}>
+                <img src={product.images[0].src} height={320} alt='bottle' />
+                <Box sx={styles.labelMapColumnXS}>
+                  <img
+                    src={product.images[1].src}
+                    alt='bottle label'
+                    style={{
+                      width: '100%',
+                      marginBottom: customTheme.spacing(2),
+                      borderRadius: styles.labelMapBR,
+                    }}
+                  />
+                  {tagData.coords[0] && (
+                    <RegionMap
+                      coords={tagData.coords}
+                      style={{
+                        width: '100%',
+                        height: '95px',
+                        borderRadius: styles.labelMapBR,
+                      }}
+                    />
+                  )}
+                </Box>
               </Box>
             )}
 
@@ -252,15 +284,26 @@ export default function Product() {
             </Box>
           </Box>
           <Box>
-            {!smScreen && product.images && (
-              <img
-                src={product.images[1].src}
-                height={150}
-                alt='bottle label'
-                style={{ margin: '10px 0' }}
-              />
+            {!smScreen && (
+              <>
+                <img
+                  src={product.images[1].src}
+                  height={150}
+                  alt='bottle label'
+                  style={{ margin: '10px 0', borderRadius: styles.labelMapBR }}
+                />
+                {tagData.coords[0] && (
+                  <RegionMap
+                    coords={tagData.coords}
+                    style={{
+                      width: '158px',
+                      height: '150px',
+                      borderRadius: styles.labelMapBR,
+                    }}
+                  />
+                )}
+              </>
             )}
-            <RegionMap />
           </Box>
         </Box>
         <Box>
