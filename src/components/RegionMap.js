@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from '!mapbox-gl';
 import customTheme from './../styles/theme.js';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API;
