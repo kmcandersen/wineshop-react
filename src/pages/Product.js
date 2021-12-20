@@ -193,7 +193,9 @@ export default function Product() {
               >
                 ORIGIN:{' '}
                 <span style={{ textTransform: 'capitalize' }}>
-                  {tagData.region}, {tagData.country}
+                  {tagData.region === 'na'
+                    ? `${tagData.country}`
+                    : `${tagData.region}, ${tagData.country}`}
                 </span>
                 <ReactCountryFlag
                   style={{
