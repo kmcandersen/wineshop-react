@@ -30,6 +30,7 @@ const styles = {
   imagesContainerXS: {
     display: 'flex',
     alignItems: 'flex-start',
+    justifyContent: 'space-between',
     width: '100%',
     mt: customTheme.spacing(6),
   },
