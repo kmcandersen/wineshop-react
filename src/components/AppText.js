@@ -28,6 +28,7 @@ export function SectionHead({ headerText }) {
       component='h2'
       sx={{
         fontFamily: 'Playfair Display',
+        fontStyle: 'italic',
         fontSize: '1.8rem',
         letterSpacing: '0.25px',
         textAlign: 'center',

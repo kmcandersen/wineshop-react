@@ -6,6 +6,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import customTheme from './styles/theme.js';
 import App from './App';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/600-italic.css';
 import './index.css';
 
 ReactDOM.render(
