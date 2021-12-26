@@ -11,6 +11,7 @@ export function PageHead({ children, color = 'mediumGrayText' }) {
       sx={{
         color: customTheme.palette[color].main,
         fontFamily: 'Playfair Display',
+        fontStyle: 'italic',
         fontSize: '2.2rem',
         fontWeight: 700,
         textTransform: 'lowercase',

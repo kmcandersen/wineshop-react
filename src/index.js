@@ -8,6 +8,7 @@ import App from './App';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@fontsource/playfair-display/600.css';
 import '@fontsource/playfair-display/600-italic.css';
+import '@fontsource/playfair-display/700-italic.css';
 import './index.css';
 
 ReactDOM.render(
