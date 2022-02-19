@@ -100,7 +100,10 @@ export const ShopProvider = ({ children }) => {
 
   const fetchCheckout = async (checkoutId) => {
     try {
-      const checkout = await client.checkout.fetch(checkoutId);
+      let checkout = await client.checkout.fetch(checkoutId);
+      if (checkout == null) {
+        checkout = createCheckout();
+      }
       dispatch({
         type: 'UPDATE_CHECKOUT',
         payload: checkout,
