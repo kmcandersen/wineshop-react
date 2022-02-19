@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Button, Container, Grid, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import customTheme from './../styles/theme.js';
 
@@ -83,17 +76,6 @@ export default function Footer() {
               py: customTheme.spacing(4),
             }}
           >
-            <Grid
-              item
-              sx={{
-                ...styles.flex,
-                mb: customTheme.spacing(2),
-              }}
-            >
-              <Typography paragraph sx={{ mb: 0, fontWeight: 700 }}>
-                This is a demo storefront for learning purposes.
-              </Typography>
-            </Grid>
             <Grid
               container
               sx={{

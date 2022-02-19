@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
+import Alert from './Alert';
 import Cart from '../pages/Cart';
 import Footer from './Footer';
 import Navbar from './Navbar';
@@ -21,6 +22,11 @@ export default function Layout(props) {
 
   return (
     <Box>
+      <Alert
+        message='This is a demo store that does not offer goods for purchase.'
+        colorBg={theme.palette.grey[800]}
+        colorText={theme.palette.common.white}
+      />
       <Navbar />
       <Cart />
       <Container
