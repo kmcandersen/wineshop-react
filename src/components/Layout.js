@@ -1,25 +1,29 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 import Alert from './Alert';
 import Cart from '../pages/Cart';
 import Footer from './Footer';
-import Hero from './Hero';
+import Home from '../pages/Home';
 import Navbar from './Navbar';
-
-const styles = {
-  container: {
-    height: `calc(100vh-65px)`,
-    maxWidth: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    mb: '80px',
-  },
-};
 
 export default function Layout(props) {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const location = useLocation();
+
+  const styles = {
+    container: {
+      height: `calc(100vh-65px)`,
+      maxWidth: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      mb: smScreen ? '65px' : '80px',
+      mt: '65px',
+      pt: smScreen ? '45px' : '60px',
+    },
+  };
 
   return (
     <Box>
@@ -30,15 +34,13 @@ export default function Layout(props) {
       />
       <Navbar />
       <Cart />
-      <Hero />
-      <Container
-        maxWidth='md'
-        sx={{
-          ...styles.container,
-        }}
-      >
-        {props.children}
-      </Container>
+      {location.pathname === '/' ? (
+        <Home />
+      ) : (
+        <Container maxWidth='md' sx={styles.container}>
+          {props.children}
+        </Container>
+      )}
       <Footer />
     </Box>
   );

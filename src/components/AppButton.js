@@ -72,14 +72,36 @@ export function OutlinedGoHomeButton() {
   );
 }
 
-export function OutlinedHeroLinkButton({ children, route, collId }) {
+export function HeroLinkButton({ children, route }) {
+  return (
+    <Link to={route} style={{ textDecoration: 'none' }}>
+      <Button
+        variant='outlined'
+        color='white'
+        sx={{
+          width: '250px',
+          height: '50px',
+          mt: customTheme.spacing(2),
+          borderWidth: '2px',
+          backgroundColor: '#FFFFFF20',
+          fontSize: '0.95rem',
+          fontWeight: 700,
+        }}
+      >
+        {children}
+      </Button>
+    </Link>
+  );
+}
+
+export function ImageLinkButton({ children, route, collId }) {
   return (
     <Link to={route} state={{ collId }} style={{ textDecoration: 'none' }}>
       <Button
         variant='outlined'
         color='white'
         sx={{
-          width: '250px',
+          width: '160px',
           height: '50px',
           mt: customTheme.spacing(2),
           borderWidth: '2px',

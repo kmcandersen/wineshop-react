@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { OutlinedHeroLinkButton } from '../components/AppButton';
+import { HeroLinkButton } from '../components/AppButton';
 import customTheme from './../styles/theme.js';
 import grapesPhoto from '../assets/grapes-on-table.jpg';
 
@@ -56,9 +56,9 @@ export default function Hero() {
           </p>
         )}
 
-        <OutlinedHeroLinkButton route='products' state={null}>
+        <HeroLinkButton route='products' state={null}>
           Shop all wines
-        </OutlinedHeroLinkButton>
+        </HeroLinkButton>
       </Box>
     </section>
   );
