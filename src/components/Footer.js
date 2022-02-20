@@ -24,7 +24,7 @@ export default function Footer() {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        pt: customTheme.spacing(10),
+        mt: '100px',
       }}
     >
       <Box sx={styles.footerBar}>

@@ -14,19 +14,17 @@ export default function Layout(props) {
 
   const styles = {
     container: {
-      height: `calc(100vh-65px)`,
       maxWidth: '100%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      mb: smScreen ? '65px' : '80px',
       mt: '65px',
       pt: smScreen ? '45px' : '60px',
     },
   };
 
   return (
-    <Box>
+    <div style={{ height: '100%' }}>
       <Alert
         message='This is a demo store that does not offer goods for purchase.'
         colorBg={theme.palette.grey[800]}
@@ -37,11 +35,17 @@ export default function Layout(props) {
       {location.pathname === '/' ? (
         <Home />
       ) : (
-        <Container maxWidth='md' sx={styles.container}>
+        <Container
+          maxWidth='md'
+          sx={{
+            ...styles.container,
+            minHeight: `calc(100vh - 65px - 280px)`,
+          }}
+        >
           {props.children}
         </Container>
       )}
       <Footer />
-    </Box>
+    </div>
   );
 }
