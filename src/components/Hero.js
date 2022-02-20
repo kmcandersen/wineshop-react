@@ -12,7 +12,7 @@ export default function Hero() {
     heroWrapper: {
       backgroundImage: `linear-gradient(rgba(150, 12, 12, 0.75), rgba(150, 12, 12, 0.75)), url(${grapesPhoto})`,
       backgroundSize: 'cover',
-      padding: smScreen ? '100px 0 60px 0' : '110px 0 90px 0',
+      padding: smScreen ? '100px 0 60px 0' : '130px 0 90px 0',
     },
     textWrapper: {
       maxWidth: '540px',
