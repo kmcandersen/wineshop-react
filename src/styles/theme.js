@@ -25,6 +25,7 @@ const customTheme = createTheme({
     darkGrayText: { main: '#525252' },
     mediumGrayText: { main: '#6B6B6B' }, // passes AA large text
     lightGray: { main: '#DBDBDB' },
+    whiteText: { main: '#FAFAFA' },
     // for dynamic color prop names
     black: { main: uiBlack },
     white: { main: '#fff' },

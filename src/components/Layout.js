@@ -3,6 +3,7 @@ import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 import Alert from './Alert';
 import Cart from '../pages/Cart';
 import Footer from './Footer';
+import Hero from './Hero';
 import Navbar from './Navbar';
 
 const styles = {
@@ -29,11 +30,11 @@ export default function Layout(props) {
       />
       <Navbar />
       <Cart />
+      <Hero />
       <Container
         maxWidth='md'
         sx={{
           ...styles.container,
-          mt: `${smScreen ? `calc(65px + 40px)` : `calc(65px + 60px)`}`,
         }}
       >
         {props.children}

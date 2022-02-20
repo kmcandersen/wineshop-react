@@ -15,6 +15,7 @@ import grapesPhoto from '../assets/grapes-on-table.jpg';
 import bottlesPhoto from '../assets/bottles-on-shelf.jpg';
 import glassesPhoto from '../assets/wine-glasses.jpg';
 import { OutlinedHeroLinkButton } from '../components/AppButton';
+
 import ProductCardGroup from '../components/ProductCardGroup';
 
 const styles = {
@@ -44,7 +45,6 @@ const styles = {
 
 export default function Home() {
   const [collection, setCollection] = useState({});
-  const [animate, setAnimate] = useState(true);
   const navigate = useNavigate();
 
   const theme = useTheme();
@@ -66,93 +66,14 @@ export default function Home() {
     fetchCollection(collectionIds.featured);
   }, [navigate]);
 
-  useEffect(() => {
-    if (window.sessionStorage.getItem('firstLoadDone') === null) {
-      setAnimate(true);
-      // delay until after animations have run
-      setTimeout(() => {
-        window.sessionStorage.setItem('firstLoadDone', 1);
-      }, 3000);
-    } else {
-      setAnimate(false);
-    }
-  }, []);
-
   document.title = 'Welcome to wineshop';
 
   return (
-    <Container>
-      <Grid container>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          sx={{ ...styles.box, pb: `${smScreen ? customTheme.spacing(6) : 0}` }}
-        >
-          <Typography component='h1' sx={styles.sloganText}>
-            Find and buy your next favorite wine.
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          sx={{
-            ...styles.box,
-            ...styles.redBox,
-            height: `${smScreen ? '200px' : '250px'}`,
-          }}
-          className={animate ? 'fade-in-1' : ''}
-        >
-          <OutlinedHeroLinkButton
-            route='/collections/reds'
-            collId={collectionIds.reds}
-          >
-            Shop all reds
-          </OutlinedHeroLinkButton>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          sx={{
-            ...styles.box,
-            ...styles.whiteBox,
-            height: `${smScreen ? '200px' : '250px'}`,
-          }}
-          className={animate ? 'fade-in-2' : ''}
-        >
-          <OutlinedHeroLinkButton
-            route='/collections/whites'
-            collId={collectionIds.whites}
-          >
-            Shop all whites
-          </OutlinedHeroLinkButton>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          sx={{
-            ...styles.box,
-            ...styles.roseBox,
-            height: `${smScreen ? '200px' : '250px'}`,
-          }}
-          className={animate ? 'fade-in-3' : ''}
-        >
-          <OutlinedHeroLinkButton
-            route='/collections/roses'
-            collId={collectionIds.roses}
-          >
-            Shop all rosés
-          </OutlinedHeroLinkButton>
-        </Grid>
-      </Grid>
-
+    <>
       <ProductCardGroup
         items={collection.products}
         headerText='Favorite Summer Sips'
       />
-    </Container>
+    </>
   );
 }
