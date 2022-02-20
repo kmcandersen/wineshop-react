@@ -8,7 +8,7 @@
 ### Screenshots
 
 <p>
-<img src="https://kristenandersen.online/assets/screenshots/wineshop-home.png" alt="home screen" width="40%" style="padding: 15px;"/>
+<img src="https://kristenandersen.online/assets/screenshots/wineshop-home.jpg" alt="home screen" width="40%" style="padding: 15px;"/>
 <img src="https://kristenandersen.online/assets/screenshots/wineshop-product-list.png" alt="list screen" width="40%"style="padding: 15px;"/>
 </p>
 <p>
