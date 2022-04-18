@@ -61,14 +61,10 @@ export default function Navbar() {
   };
 
   const calcCartBadgeQty = () => {
-    let total = checkout.lineItems.reduce((acc, item) => {
+    checkout.lineItems.reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
-    if (total) {
-      return total;
-    } else {
-      return null;
-    }
+    return null;
   };
   const badgeQty = checkout.lineItems && calcCartBadgeQty();
 
