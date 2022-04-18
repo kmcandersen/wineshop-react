@@ -71,3 +71,13 @@ export const getCoords = (region) => {
     }
   }
 };
+
+// convert hyphenated product handle to title, if product page not accessed via link (w/state)
+export const makeTitle = (slug) => {
+  var words = slug.split('-');
+  for (var i = 0; i < words.length; i++) {
+    var word = words[i];
+    words[i] = word.charAt(0).toUpperCase() + word.slice(1);
+  }
+  return words.join(' ');
+};

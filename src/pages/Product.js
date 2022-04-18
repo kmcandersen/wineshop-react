@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box, Chip, Container, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ReactCountryFlag from 'react-country-flag';
 import client from '../config/initClient.js';
 import { getTagData } from '../utils/helperFunctions.js';
+import { makeTitle } from '../utils/helperFunctions.js';
 import ShopContext from './../context/shopContext';
 import {
   BodyTextSpecial,
@@ -50,10 +51,11 @@ export default function Product() {
   const [product, setProduct] = useState();
   const [tagData, setTagData] = useState();
   const [relatedProducts, setRelatedProducts] = useState();
-  const location = useLocation();
-  const productTitle = location.state ? location.state.title : null;
-  const navigate = useNavigate();
 
+  const location = useLocation();
+  const params = useParams();
+
+  const navigate = useNavigate();
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const xsScreen = useMediaQuery('(max-width:444px)');
@@ -110,7 +112,7 @@ export default function Product() {
         const currentProduct = response.model.products[0];
         setProduct(currentProduct);
         const tagsObj = getTagData(currentProduct.tags);
-        setTagData(tagsObj);
+        setTagData(tagsObj || null);
         const collName = `${tagsObj.color}s`;
         const collectionId = collectionIds[collName];
         const colorCollection = await client.collection.fetchWithProducts(
@@ -125,8 +127,14 @@ export default function Product() {
         navigate('/not-found', { state: { message: 'failed request' } });
       }
     };
+    // Product page accessed via link ? title from passed-in state : title from url
+    const productTitle = location.state
+      ? location.state.title
+      : params
+      ? makeTitle(params.handle)
+      : null;
     fetchProductInfo(productTitle);
-  }, [location, navigate, productTitle]);
+  }, [location, params, navigate]);
 
   const handleSubmit = () => {
     addItemToCheckout(product.variants[0].id, 1);
