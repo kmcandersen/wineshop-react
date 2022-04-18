@@ -111,17 +111,19 @@ export default function Product() {
         const response = await client.graphQLClient.send(productQuery);
         const currentProduct = response.model.products[0];
         setProduct(currentProduct);
-        const tagsObj = getTagData(currentProduct.tags);
-        setTagData(tagsObj || null);
-        const collName = `${tagsObj.color}s`;
-        const collectionId = collectionIds[collName];
-        const colorCollection = await client.collection.fetchWithProducts(
-          collectionId
-        );
-        const filteredResult = colorCollection.products.filter(
-          (item) => item.id !== currentProduct.id
-        );
-        setRelatedProducts(filteredResult);
+        if (currentProduct) {
+          const tagsObj = getTagData(currentProduct.tags);
+          setTagData(tagsObj);
+          const collName = `${tagsObj.color}s`;
+          const collectionId = collectionIds[collName];
+          const colorCollection = await client.collection.fetchWithProducts(
+            collectionId
+          );
+          const filteredResult = colorCollection.products.filter(
+            (item) => item.id !== currentProduct.id
+          );
+          setRelatedProducts(filteredResult);
+        }
       } catch (error) {
         console.log('error: ', error);
         navigate('/not-found', { state: { message: 'failed request' } });
